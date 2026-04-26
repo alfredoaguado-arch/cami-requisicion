@@ -9,7 +9,7 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#EFEFED;font-family:'Courier New',monospace;min-height:100vh;padding:1.5rem 1rem}
-.container{max-width:880px;margin:0 auto;background:#fff;border:0.5px solid #d3d1c7;border-radius:10px;overflow:hidden}
+.container{max-width:980px;margin:0 auto;background:#fff;border:0.5px solid #d3d1c7;border-radius:10px;overflow:hidden}
 .masthead{background:#1a1a18;display:flex;align-items:center;justify-content:space-between;padding:14px 2rem}
 .logo-txt{font-size:22px;font-weight:900;color:#fff;letter-spacing:.2em}
 .sub-logo{font-size:8px;color:#888780;letter-spacing:.04em;margin-top:3px}
@@ -18,6 +18,15 @@ body{background:#EFEFED;font-family:'Courier New',monospace;min-height:100vh;pad
 .doc-sub{font-size:15px;font-weight:700;color:#fff;margin-top:2px}
 .user-bar{background:#f5f3ee;padding:8px 2rem;font-size:11px;color:#4A4A48;display:flex;justify-content:space-between;border-bottom:0.5px solid #d3d1c7}
 .user-bar a{color:#A32D2D;text-decoration:none;font-weight:700}
+/* Pestañas */
+.tabs{display:flex;background:#fff;border-bottom:1px solid #d3d1c7;padding:0 1rem}
+.tab{padding:12px 18px;cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#888780;border-bottom:3px solid transparent;display:flex;align-items:center;gap:8px;transition:color .15s,border-color .15s}
+.tab:hover{color:#4A4A48}
+.tab.active{color:#1a1a18;border-bottom-color:#ED7D31}
+.tab .badge{background:#ED7D31;color:#fff;font-size:10px;padding:2px 7px;border-radius:10px;letter-spacing:0;font-weight:700}
+.tab.disabled{opacity:.4;cursor:not-allowed;pointer-events:none}
+.tab-content{display:none}
+.tab-content.active{display:block}
 .form-body{padding:1.5rem 2rem}
 .section{margin-bottom:1.25rem}
 .section-title{font-size:11px;font-weight:700;color:#4A4A48;letter-spacing:.1em;text-transform:uppercase;border-bottom:0.5px solid #d3d1c7;padding-bottom:8px;margin-bottom:1rem;display:flex;justify-content:space-between;align-items:center}
@@ -52,13 +61,41 @@ textarea{resize:vertical;min-height:60px}
 .toast.show{display:block}
 .toast.ok{background:#EAF3DE;color:#3B6D11;border:0.5px solid #C0DD97}
 .toast.err{background:#FCEBEB;color:#A32D2D;border:0.5px solid #F7C1C1}
+.toast.info{background:#E8F0F8;color:#2A5A8C;border:0.5px solid #B8D2E8}
+
+/* Listas (aprobar/pagar) */
+.lista-vacia{text-align:center;padding:3rem 2rem;color:#888780;font-size:13px}
+.req-card{border:1px solid #d3d1c7;border-radius:8px;padding:14px 16px;margin-bottom:10px;background:#fafaf8;cursor:pointer;transition:background .15s,border-color .15s}
+.req-card:hover{background:#f5f3ee;border-color:#888780}
+.req-card-row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.req-card .folio{font-weight:700;color:#1a1a18;font-size:13px}
+.req-card .meta{font-size:11px;color:#4A4A48;display:flex;gap:14px;flex-wrap:wrap;margin-top:4px}
+.req-card .monto{font-weight:700;color:#1a1a18;font-size:14px}
+.req-card .pendientes{font-size:10px;background:#FFF4D6;color:#8B6914;padding:3px 8px;border-radius:10px;font-weight:700;letter-spacing:.04em}
+
+/* Estado badge */
+.estado-badge{display:inline-block;padding:3px 10px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.e-pendiente{background:#FFF4D6;color:#8B6914}
+.e-aprobada,.e-aprobado,.e-pagada{background:#EAF3DE;color:#3B6D11}
+.e-rechazada,.e-rechazado{background:#FCEBEB;color:#A32D2D}
+.e-parcial{background:#E8F0F8;color:#2A5A8C}
+
+/* Botones aprobar/rechazar en concepto */
+.btn-aprobar{background:#3B6D11;color:#fff;border:none;border-radius:4px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Courier New',monospace}
+.btn-aprobar:hover{background:#2D550C}
+.btn-rechazar{background:#A32D2D;color:#fff;border:none;border-radius:4px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Courier New',monospace;margin-left:6px}
+.btn-rechazar:hover{background:#7E2222}
+.btn-aprobar:disabled,.btn-rechazar:disabled{opacity:.4;cursor:not-allowed}
+
+/* Modales */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;align-items:center;justify-content:center;padding:1rem}
 .modal-overlay.show{display:flex}
 .modal-box{background:#fff;border-radius:10px;max-width:420px;width:100%;overflow:hidden}
+.modal-box.large{max-width:760px;max-height:90vh;display:flex;flex-direction:column}
 .modal-header{padding:1rem 1.5rem;border-bottom:1px solid #e5e3da;display:flex;justify-content:space-between;align-items:center;background:#1a1a18;color:#fff}
 .modal-header strong{font-size:13px;letter-spacing:.06em}
 .modal-header button{background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;line-height:1}
-.modal-body{padding:1.25rem 1.5rem}
+.modal-body{padding:1.25rem 1.5rem;overflow-y:auto}
 .modal-body p{font-size:12px;color:#4A4A48;margin-bottom:14px;line-height:1.5}
 .modal-actions{display:flex;gap:8px;margin-top:14px}
 .modal-actions button{flex:1;padding:10px;border:none;border-radius:6px;font-family:'Courier New',monospace;font-size:13px;font-weight:700;cursor:pointer}
@@ -66,14 +103,32 @@ textarea{resize:vertical;min-height:60px}
 .btn-primary:hover{background:#333331}
 .btn-secondary{background:#EFEFED;color:#4A4A48;border:0.5px solid #d3d1c7}
 .btn-secondary:hover{background:#d3d1c7}
+.btn-success{background:#3B6D11;color:#fff}
+.btn-success:hover{background:#2D550C}
 .modal-list-search{margin:0.75rem 1.5rem;padding:0.6rem 0.8rem;border:1px solid #d3d1c7;border-radius:6px;font-family:'Courier New',monospace;width:calc(100% - 3rem)}
 .modal-list{overflow-y:auto;padding:0 1.5rem 1rem;flex:1;font-family:'Courier New',monospace;font-size:0.9rem;max-height:50vh}
-.modal-box.large{max-width:600px;max-height:80vh;display:flex;flex-direction:column}
 .list-item{padding:0.7rem 0.5rem;border-bottom:1px solid #e5e3da;cursor:pointer;display:flex;justify-content:space-between;gap:1rem}
 .list-item:hover{background:#f5f3ee}
 .list-item .name{font-weight:bold;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .list-item .date{color:#888;font-size:0.85rem;flex-shrink:0}
-@media(max-width:580px){.form-body{padding:1rem}.grid2,.grid3{grid-template-columns:1fr}.btn-row{flex-direction:column}.masthead{padding:12px 1rem}.user-bar{padding:8px 1rem}}
+
+/* Detalle de requisicion (en modal) */
+.detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.detail-grid .cell{background:#f5f3ee;border-radius:4px;padding:8px 10px}
+.detail-grid .cell .label{font-size:9px;color:#888780;letter-spacing:.06em;text-transform:uppercase}
+.detail-grid .cell .val{font-size:12px;font-weight:700;color:#1a1a18;margin-top:2px;word-break:break-word}
+.concepto-row{border:1px solid #e5e3da;border-radius:6px;padding:10px;margin-bottom:8px;background:#fff}
+.concepto-row.aprobado{background:#F4F8EC;border-color:#C0DD97}
+.concepto-row.rechazado{background:#FCEBEB;border-color:#F7C1C1}
+.concepto-row .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px;flex-wrap:wrap}
+.concepto-row .desc{font-weight:700;font-size:12px;color:#1a1a18;flex:1}
+.concepto-row .info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;font-size:11px}
+.concepto-row .info-grid .row{display:flex;gap:6px}
+.concepto-row .info-grid .row .lbl{color:#888780;text-transform:uppercase;font-size:10px;min-width:60px}
+.concepto-row .actions{margin-top:10px}
+.concepto-row .motivo{margin-top:8px;font-size:11px;color:#A32D2D;font-style:italic;background:#fff;padding:6px 8px;border-radius:4px}
+
+@media(max-width:580px){.form-body{padding:1rem}.grid2,.grid3{grid-template-columns:1fr}.btn-row{flex-direction:column}.masthead{padding:12px 1rem}.user-bar{padding:8px 1rem}.tabs{padding:0}.tab{padding:10px 12px;font-size:11px}.detail-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -92,73 +147,116 @@ textarea{resize:vertical;min-height:60px}
     <span>Sesion: <b id="user-name">...</b></span>
     <a href="#" onclick="cerrarSesion();return false;">Cerrar sesion</a>
   </div>
-  <div class="form-body">
-    <div class="section">
-      <div class="section-title">Datos del Solicitante</div>
-      <div class="grid3">
-        <div><label class="fl">Solicitante <span class="req">*</span></label><input type="text" id="solicitante" placeholder="Nombre completo"/></div>
-        <div><label class="fl">WhatsApp <span class="req">*</span></label><input type="tel" id="whatsapp" placeholder="10 digitos" maxlength="10" oninput="validarWhats()"/></div>
-        <div><label class="fl">Fecha <span class="req">*</span></label><input type="date" id="fecha"/></div>
-      </div>
+
+  <!-- Tabs -->
+  <div class="tabs" id="tabs">
+    <div class="tab active" data-tab="crear" onclick="changeTab('crear')">Crear</div>
+    <div class="tab" data-tab="aprobar" onclick="changeTab('aprobar')" style="display:none">
+      Aprobar <span class="badge" id="badge-aprobar" style="display:none">0</span>
     </div>
-    <div class="section">
-      <div class="section-title">Proyecto y Categoria</div>
-      <div class="grid2">
-        <div>
-          <label class="fl">Proyecto <span class="req">*</span></label>
-          <select id="proyecto"><option value="">Cargando...</option></select>
+    <div class="tab" data-tab="pagar" onclick="changeTab('pagar')" style="display:none">
+      Pagar <span class="badge" id="badge-pagar" style="display:none">0</span>
+    </div>
+  </div>
+
+  <!-- ── PESTAÑA: CREAR ── -->
+  <div class="tab-content active" id="content-crear">
+    <div class="form-body">
+      <div class="section">
+        <div class="section-title">Datos del Solicitante</div>
+        <div class="grid3">
+          <div><label class="fl">Solicitante <span class="req">*</span></label><input type="text" id="solicitante" placeholder="Nombre completo"/></div>
+          <div><label class="fl">WhatsApp <span class="req">*</span></label><input type="tel" id="whatsapp" placeholder="10 digitos" maxlength="10" oninput="validarWhats()"/></div>
+          <div><label class="fl">Fecha <span class="req">*</span></label><input type="date" id="fecha"/></div>
         </div>
-        <div>
-          <label class="fl">Categoria <span class="req">*</span></label>
-          <select id="categoria"><option value="">Cargando...</option></select>
+      </div>
+      <div class="section">
+        <div class="section-title">Proyecto y Categoria</div>
+        <div class="grid2">
+          <div>
+            <label class="fl">Proyecto <span class="req">*</span></label>
+            <select id="proyecto"><option value="">Cargando...</option></select>
+          </div>
+          <div>
+            <label class="fl">Categoria <span class="req">*</span></label>
+            <select id="categoria"><option value="">Cargando...</option></select>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="section">
-      <div class="section-title">
-        <span>Conceptos a Pagar <span class="req">*</span></span>
-        <button class="btn-add-item" onclick="addConcepto()">+ Concepto</button>
+      <div class="section">
+        <div class="section-title">
+          <span>Conceptos a Pagar <span class="req">*</span></span>
+          <button class="btn-add-item" onclick="addConcepto()">+ Concepto</button>
+        </div>
+        <div class="partidas-wrap">
+          <table class="pt">
+            <thead><tr>
+              <th style="width:22%">Concepto</th>
+              <th style="width:11%">Banco</th>
+              <th style="width:18%">Cuenta</th>
+              <th style="width:16%">Receptor</th>
+              <th style="width:14%">Empresa</th>
+              <th style="width:13%">Monto</th>
+              <th style="width:6%"></th>
+            </tr></thead>
+            <tbody id="partidas-body"></tbody>
+          </table>
+        </div>
+        <div class="totals">
+          <table>
+            <tr class="total-final"><td><b>TOTAL SOLICITADO</b></td><td id="gran-total"><b>$0.00</b></td></tr>
+          </table>
+        </div>
       </div>
-      <div class="partidas-wrap">
-        <table class="pt">
-          <thead><tr>
-            <th style="width:22%">Concepto</th>
-            <th style="width:11%">Banco</th>
-            <th style="width:18%">Cuenta</th>
-            <th style="width:16%">Receptor</th>
-            <th style="width:14%">Empresa</th>
-            <th style="width:13%">Monto</th>
-            <th style="width:6%"></th>
-          </tr></thead>
-          <tbody id="partidas-body"></tbody>
-        </table>
+      <div class="section">
+        <label class="fl">Observaciones</label>
+        <textarea id="obs" placeholder="Notas adicionales (opcional)..." rows="3"></textarea>
       </div>
-      <div class="totals">
-        <table>
-          <tr class="total-final"><td><b>TOTAL SOLICITADO</b></td><td id="gran-total"><b>$0.00</b></td></tr>
-        </table>
+      <div class="btn-row">
+        <button class="btn-pdf" id="btn-submit" onclick="enviarRequisicion()">Enviar Requisicion</button>
+        <button class="btn-pdf" type="button" onclick="abrirSelectorDrive()">Cargar desde Drive</button>
+        <button class="btn-pdf" type="button" onclick="document.getElementById('pdf-import').click()">Cargar PDF local</button>
+        <input type="file" id="pdf-import" accept="application/pdf" style="display:none" onchange="cargarDesdePDF(event)"/>
       </div>
+      <div class="toast" id="toast-crear"></div>
     </div>
-    <div class="section">
-      <label class="fl">Observaciones</label>
-      <textarea id="obs" placeholder="Notas adicionales (opcional)..." rows="3"></textarea>
+  </div>
+
+  <!-- ── PESTAÑA: APROBAR ── -->
+  <div class="tab-content" id="content-aprobar">
+    <div class="form-body">
+      <div class="section-title" style="margin-bottom:1rem">
+        <span>Requisiciones por Aprobar</span>
+        <button class="btn-add-item" onclick="cargarPorAprobar()">↻ Refrescar</button>
+      </div>
+      <div id="lista-aprobar">
+        <div class="lista-vacia">Cargando...</div>
+      </div>
+      <div class="toast" id="toast-aprobar"></div>
     </div>
-    <div class="btn-row">
-      <button class="btn-pdf" id="btn-submit" onclick="enviarRequisicion()">Enviar Requisicion</button>
-      <button class="btn-pdf" type="button" onclick="abrirSelectorDrive()">Cargar desde Drive</button>
-      <button class="btn-pdf" type="button" onclick="document.getElementById('pdf-import').click()">Cargar PDF local</button>
-      <input type="file" id="pdf-import" accept="application/pdf" style="display:none" onchange="cargarDesdePDF(event)"/>
+  </div>
+
+  <!-- ── PESTAÑA: PAGAR ── -->
+  <div class="tab-content" id="content-pagar">
+    <div class="form-body">
+      <div class="section-title" style="margin-bottom:1rem">
+        <span>Requisiciones por Pagar</span>
+        <button class="btn-add-item" onclick="cargarPorPagar()">↻ Refrescar</button>
+      </div>
+      <div id="lista-pagar">
+        <div class="lista-vacia">Cargando...</div>
+      </div>
+      <div class="toast" id="toast-pagar"></div>
     </div>
-    <div class="toast" id="toast"></div>
   </div>
 </div>
 
-<!-- Modal: Re-login (Opcion C) -->
+<!-- Modal: Re-login -->
 <div id="relogin-modal" class="modal-overlay">
   <div class="modal-box">
     <div class="modal-header"><strong>SESION EXPIRADA</strong></div>
     <div class="modal-body">
-      <p>Tu sesion expiro. Ingresa tu PIN para continuar sin perder los datos del formulario.</p>
+      <p>Tu sesion expiro. Ingresa tu PIN para continuar sin perder los datos.</p>
       <label class="fl">Usuario</label>
       <input type="text" id="relogin-nombre" readonly style="background:#f5f3ee;color:#888"/>
       <label class="fl" style="margin-top:10px">PIN <span class="req">*</span></label>
@@ -172,16 +270,72 @@ textarea{resize:vertical;min-height:60px}
   </div>
 </div>
 
-<!-- Modal: Selector de requisiciones en Drive -->
+<!-- Modal: Selector Drive -->
 <div id="drive-modal" class="modal-overlay">
   <div class="modal-box large">
     <div class="modal-header">
       <strong>SELECCIONA UNA REQUISICION</strong>
       <button onclick="cerrarSelectorDrive()">&times;</button>
     </div>
-    <input type="text" id="drive-search" placeholder="Buscar por nombre o folio..." class="modal-list-search" oninput="filtrarListaDrive()"/>
-    <div id="drive-list" class="modal-list">
-      <div style="padding:2rem;text-align:center;color:#888;">Cargando...</div>
+    <input type="text" id="drive-search" placeholder="Buscar..." class="modal-list-search" oninput="filtrarListaDrive()"/>
+    <div id="drive-list" class="modal-list"><div style="padding:2rem;text-align:center;color:#888;">Cargando...</div></div>
+  </div>
+</div>
+
+<!-- Modal: Detalle requisicion (aprobar) -->
+<div id="aprobar-modal" class="modal-overlay">
+  <div class="modal-box large">
+    <div class="modal-header">
+      <strong id="aprobar-modal-folio">REQ-XXX</strong>
+      <button onclick="cerrarAprobarModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="aprobar-modal-body"></div>
+  </div>
+</div>
+
+<!-- Modal: Motivo de rechazo -->
+<div id="rechazo-modal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-header"><strong>MOTIVO DE RECHAZO</strong></div>
+    <div class="modal-body">
+      <p>Indica por que rechazas este concepto. El motivo sera visible para el solicitante.</p>
+      <label class="fl">Concepto</label>
+      <input type="text" id="rechazo-concepto" readonly style="background:#f5f3ee;color:#888"/>
+      <label class="fl" style="margin-top:10px">Motivo <span class="req">*</span></label>
+      <textarea id="rechazo-motivo" placeholder="Ej: Falta cotizacion del proveedor" rows="3"></textarea>
+      <div id="rechazo-error" style="color:#A32D2D;font-size:11px;margin-top:8px;min-height:14px"></div>
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="cerrarRechazoModal()">Cancelar</button>
+        <button class="btn-rechazar" id="btn-confirmar-rechazo" onclick="confirmarRechazo()" style="flex:1;padding:10px;font-size:13px">Confirmar Rechazo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Detalle requisicion (pagar) -->
+<div id="pagar-modal" class="modal-overlay">
+  <div class="modal-box large">
+    <div class="modal-header">
+      <strong id="pagar-modal-folio">REQ-XXX</strong>
+      <button onclick="cerrarPagarModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="pagar-modal-body"></div>
+  </div>
+</div>
+
+<!-- Modal: Confirmar pago -->
+<div id="confirmar-pago-modal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-header"><strong>CONFIRMAR PAGO</strong></div>
+    <div class="modal-body">
+      <p id="confirmar-pago-resumen">...</p>
+      <label class="fl">Fecha del pago <span class="req">*</span></label>
+      <input type="date" id="confirmar-pago-fecha"/>
+      <div id="confirmar-pago-error" style="color:#A32D2D;font-size:11px;margin-top:8px;min-height:14px"></div>
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="cerrarConfirmarPago()">Cancelar</button>
+        <button class="btn-success" id="btn-confirmar-pago-final" onclick="confirmarPagoFinal()" style="flex:1;padding:10px;font-size:13px">Confirmar</button>
+      </div>
     </div>
   </div>
 </div>
@@ -198,6 +352,8 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz15JpGw4MtWQo32il-r
 const CENTRAL_URL = 'https://script.google.com/macros/s/AKfycbw8Ucc9J3_TQcsAR0tn2Lk5DBN2bPWG6HF2pm3GfoEwa2NlRFQn5qZPVj7gy-IaLBSg/exec';
 const LOGIN_URL = 'https://alfredoaguado-arch.github.io/cami-app2/';
 const APP_KEY = 'requisicion';
+const APP_KEY_APROBAR = 'requisicion-aprobar';
+const APP_KEY_PAGAR = 'requisicion-pagar';
 const META_PREFIX = 'CAMI_REQUISICION_DATA::';
 
 // Validacion de cuenta por banco
@@ -217,6 +373,11 @@ const BANCO_VALIDACION = {
 let _logoB64 = null;
 let _userInfo = null;
 let _driveCache = [];
+let _aprobarCache = [];
+let _pagarCache = [];
+let _conceptoEnRechazo = null;
+let _reqEnPago = null;
+let _currentTab = 'crear';
 
 document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
 
@@ -228,14 +389,17 @@ function getSession() {
   try {
     const s = JSON.parse(raw);
     return s.token ? s : null;
-  } catch (e) {
-    return null;
-  }
+  } catch (e) { return null; }
 }
 
 function getToken() {
   const s = getSession();
   return s ? s.token : null;
+}
+
+function tieneApp(appKey) {
+  if (!_userInfo || !_userInfo.apps) return false;
+  return _userInfo.apps.indexOf(appKey) !== -1;
 }
 
 function cerrarSesion() {
@@ -244,10 +408,7 @@ function cerrarSesion() {
 }
 
 function abrirReloginModal() {
-  if (!_userInfo || !_userInfo.nombre) {
-    cerrarSesion();
-    return;
-  }
+  if (!_userInfo || !_userInfo.nombre) { cerrarSesion(); return; }
   document.getElementById('relogin-nombre').value = _userInfo.nombre;
   document.getElementById('relogin-pin').value = '';
   document.getElementById('relogin-error').textContent = '';
@@ -275,34 +436,23 @@ async function hacerRelogin() {
       body: JSON.stringify({ action: 'login', nombre: _userInfo.nombre, pin: pin })
     });
     const data = await resp.json();
-
     if (!data.ok) {
       err.textContent = data.error || 'PIN incorrecto';
       btn.disabled = false; btn.textContent = 'Reconectar';
       return;
     }
-
-    // Guardar nueva sesion
-    const session = {
-      token: data.token,
-      nombre: data.nombre,
-      rol: data.rol,
-      apps: data.apps || []
-    };
+    const session = { token: data.token, nombre: data.nombre, rol: data.rol, apps: data.apps || [] };
     sessionStorage.setItem('cami_session', JSON.stringify(session));
     _userInfo = session;
-
     cerrarReloginModal();
-    showToast('Sesion reconectada. Puedes continuar.', 'ok');
+    showToast('Sesion reconectada.', 'ok');
     btn.disabled = false; btn.textContent = 'Reconectar';
-
   } catch (e) {
     err.textContent = 'Error de red: ' + e.message;
     btn.disabled = false; btn.textContent = 'Reconectar';
   }
 }
 
-// Detectar Enter en el modal de relogin
 document.getElementById('relogin-pin').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') hacerRelogin();
 });
@@ -317,9 +467,13 @@ async function init() {
     return;
   }
 
-  // Verificar acceso a esta app
-  if (session.apps && session.apps.length && session.apps.indexOf(APP_KEY) === -1) {
-    showToast('No tienes permiso para usar este modulo. Redirigiendo...', 'err');
+  // Verificar acceso minimo (cualquiera de las 3 app keys da acceso)
+  const apps = session.apps || [];
+  const tieneAlguna = apps.indexOf(APP_KEY) !== -1 ||
+                      apps.indexOf(APP_KEY_APROBAR) !== -1 ||
+                      apps.indexOf(APP_KEY_PAGAR) !== -1;
+  if (apps.length && !tieneAlguna) {
+    showToast('No tienes permiso para usar este modulo.', 'err');
     setTimeout(() => window.location.href = LOGIN_URL, 2000);
     return;
   }
@@ -327,18 +481,51 @@ async function init() {
   _userInfo = session;
   document.getElementById('user-name').textContent = session.nombre + ' (' + (session.rol || 'Usuario') + ')';
 
-  // Prellenar el solicitante con el nombre del usuario logueado
-  document.getElementById('solicitante').value = session.nombre;
+  // Mostrar pestañas segun permisos
+  configurarTabs();
 
-  // Cargar catalogos en paralelo
-  await Promise.all([
-    cargarProyectos(),
-    cargarCategorias(),
-    cargarLogo()
-  ]);
+  // Decidir pestaña inicial
+  if (tieneApp(APP_KEY)) {
+    document.getElementById('solicitante').value = session.nombre;
+    await Promise.all([cargarProyectos(), cargarCategorias(), cargarLogo()]);
+    addConcepto();
+  } else {
+    // No puede crear, no inicializa el formulario, va a la primera pestaña disponible
+    if (tieneApp(APP_KEY_APROBAR)) changeTab('aprobar');
+    else if (tieneApp(APP_KEY_PAGAR)) changeTab('pagar');
+  }
 
-  // Agregar primera fila de concepto
-  addConcepto();
+  // Pre-cargar conteos en background si tiene esos permisos
+  if (tieneApp(APP_KEY_APROBAR)) cargarPorAprobar();
+  if (tieneApp(APP_KEY_PAGAR))   cargarPorPagar();
+}
+
+function configurarTabs() {
+  const tabCrear = document.querySelector('.tab[data-tab="crear"]');
+  const tabAprobar = document.querySelector('.tab[data-tab="aprobar"]');
+  const tabPagar = document.querySelector('.tab[data-tab="pagar"]');
+
+  if (!tieneApp(APP_KEY)) {
+    tabCrear.style.display = 'none';
+  }
+  if (tieneApp(APP_KEY_APROBAR)) {
+    tabAprobar.style.display = '';
+  }
+  if (tieneApp(APP_KEY_PAGAR)) {
+    tabPagar.style.display = '';
+  }
+}
+
+function changeTab(tabName) {
+  _currentTab = tabName;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.querySelector('.tab[data-tab="' + tabName + '"]').classList.add('active');
+  document.getElementById('content-' + tabName).classList.add('active');
+
+  // Refrescar listas al entrar
+  if (tabName === 'aprobar') cargarPorAprobar();
+  if (tabName === 'pagar')   cargarPorPagar();
 }
 
 async function cargarProyectos() {
@@ -350,7 +537,7 @@ async function cargarProyectos() {
       sel.innerHTML = '<option value="">Selecciona un proyecto...</option>' +
         d.proyectos.map(p => `<option value="${escapeAttr(p)}">${escapeHtml(p)}</option>`).join('');
     } else {
-      sel.innerHTML = '<option value="">Error cargando proyectos</option>';
+      sel.innerHTML = '<option value="">Error cargando</option>';
     }
   } catch (e) {
     document.getElementById('proyecto').innerHTML = '<option value="">Error de red</option>';
@@ -366,7 +553,7 @@ async function cargarCategorias() {
       sel.innerHTML = '<option value="">Selecciona una categoria...</option>' +
         d.categorias.map(c => `<option value="${escapeAttr(c)}">${escapeHtml(c)}</option>`).join('');
     } else {
-      sel.innerHTML = '<option value="">Error cargando categorias</option>';
+      sel.innerHTML = '<option value="">Error cargando</option>';
     }
   } catch (e) {
     document.getElementById('categoria').innerHTML = '<option value="">Error de red</option>';
@@ -381,7 +568,7 @@ async function cargarLogo() {
       _logoB64 = 'data:' + (d.mime || 'image/png') + ';base64,' + d.base64;
     }
   } catch (e) {
-    console.warn('No se pudo cargar logo:', e.message);
+    console.warn('Logo no cargado:', e.message);
   }
 }
 
@@ -402,9 +589,7 @@ function addConcepto(item) {
 
   tr.innerHTML =
     '<td><input type="text" placeholder="Descripcion" value="'+escapeAttr(concepto)+'"/></td>' +
-    '<td><select onchange="validarCuentaFila(this)">'+
-      '<option value="">--</option>' + bancosOpts +
-    '</select></td>' +
+    '<td><select onchange="validarCuentaFila(this)"><option value="">--</option>' + bancosOpts + '</select></td>' +
     '<td><input type="text" placeholder="Numero" value="'+escapeAttr(cuenta)+'" oninput="validarCuentaFila(this)" inputmode="numeric"/></td>' +
     '<td><input type="text" placeholder="Receptor" value="'+escapeAttr(receptor)+'"/></td>' +
     '<td><input type="text" placeholder="Empresa" value="'+escapeAttr(empresa)+'"/></td>' +
@@ -427,10 +612,9 @@ function delRow(btn) {
 function validarCuentaFila(el) {
   const tr = el.closest('tr');
   const banco = tr.querySelector('select').value;
-  const cuentaInput = tr.querySelectorAll('input[type="text"]')[1]; // 0=concepto, 1=cuenta
+  const cuentaInput = tr.querySelectorAll('input[type="text"]')[1];
   const cuenta = (cuentaInput.value || '').replace(/\D/g, '');
-  cuentaInput.value = cuenta; // forzar solo digitos
-
+  cuentaInput.value = cuenta;
   if (!banco || !cuenta) {
     cuentaInput.classList.remove('invalid');
     cuentaInput.title = '';
@@ -451,11 +635,8 @@ function validarCuentaFila(el) {
 function validarWhats() {
   const inp = document.getElementById('whatsapp');
   inp.value = (inp.value || '').replace(/\D/g, '').substring(0, 10);
-  if (inp.value.length === 10 || inp.value.length === 0) {
-    inp.classList.remove('invalid');
-  } else {
-    inp.classList.add('invalid');
-  }
+  if (inp.value.length === 10 || inp.value.length === 0) inp.classList.remove('invalid');
+  else inp.classList.add('invalid');
 }
 
 function recalcular() {
@@ -482,10 +663,31 @@ function escapeAttr(s) {
 }
 
 function showToast(msg, tipo) {
-  const t = document.getElementById('toast');
+  const id = 'toast-' + _currentTab;
+  const t = document.getElementById(id) || document.getElementById('toast-crear');
   t.innerHTML = msg;
   t.className = 'toast show ' + tipo;
   setTimeout(() => t.classList.remove('show'), 6000);
+}
+
+function formatDateMx(s) {
+  if (!s) return '';
+  if (s instanceof Date) {
+    const dd = String(s.getDate()).padStart(2, '0');
+    const mm = String(s.getMonth() + 1).padStart(2, '0');
+    return dd + '/' + mm + '/' + s.getFullYear();
+  }
+  if (typeof s === 'string' && s.indexOf('T') > -1) {
+    const d = new Date(s);
+    if (!isNaN(d.getTime())) {
+      const dd = String(d.getDate()).padStart(2, '0');
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      return dd + '/' + mm + '/' + d.getFullYear();
+    }
+  }
+  const parts = String(s).split('-');
+  if (parts.length === 3) return parts[2] + '/' + parts[1] + '/' + parts[0];
+  return String(s);
 }
 
 // ── RECOLECTAR Y APLICAR DATOS ────────────────────────────────
@@ -525,7 +727,6 @@ function aplicarDatos(d) {
   if (d.proyecto)    document.getElementById('proyecto').value = d.proyecto;
   if (d.categoria)   document.getElementById('categoria').value = d.categoria;
   if (d.observaciones) document.getElementById('obs').value = d.observaciones;
-
   const tbody = document.getElementById('partidas-body');
   tbody.innerHTML = '';
   if (Array.isArray(d.conceptos) && d.conceptos.length) {
@@ -533,7 +734,6 @@ function aplicarDatos(d) {
   } else {
     addConcepto();
   }
-  // Re-validar cuentas
   document.querySelectorAll('#partidas-body tr').forEach(tr => {
     const cuentaInput = tr.querySelectorAll('input[type="text"]')[1];
     if (cuentaInput) validarCuentaFila(cuentaInput);
@@ -546,29 +746,20 @@ function aplicarDatos(d) {
 async function abrirSelectorDrive() {
   const token = getToken();
   if (!token) { abrirReloginModal(); return; }
-
   document.getElementById('drive-modal').classList.add('show');
   document.getElementById('drive-search').value = '';
   document.getElementById('drive-list').innerHTML = '<div style="padding:2rem;text-align:center;color:#888;">Cargando...</div>';
-
   try {
     const r = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
+      method: 'POST', headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({ action: 'listarRequisiciones', token })
     });
     const data = await r.json();
-
     if (!data.ok) {
-      if (/sesion/i.test(data.error || '')) {
-        cerrarSelectorDrive();
-        abrirReloginModal();
-        return;
-      }
-      document.getElementById('drive-list').innerHTML = '<div style="padding:2rem;color:#A32D2D;">Error: ' + escapeHtml(data.error || 'desconocido') + '</div>';
+      if (/sesion/i.test(data.error || '')) { cerrarSelectorDrive(); abrirReloginModal(); return; }
+      document.getElementById('drive-list').innerHTML = '<div style="padding:2rem;color:#A32D2D;">' + escapeHtml(data.error || 'Error') + '</div>';
       return;
     }
-
     _driveCache = data.archivos || [];
     renderListaDrive(_driveCache);
   } catch (err) {
@@ -576,16 +767,11 @@ async function abrirSelectorDrive() {
   }
 }
 
-function cerrarSelectorDrive() {
-  document.getElementById('drive-modal').classList.remove('show');
-}
+function cerrarSelectorDrive() { document.getElementById('drive-modal').classList.remove('show'); }
 
 function renderListaDrive(lista) {
   const cont = document.getElementById('drive-list');
-  if (!lista.length) {
-    cont.innerHTML = '<div style="padding:2rem;text-align:center;color:#888;">No hay requisiciones.</div>';
-    return;
-  }
+  if (!lista.length) { cont.innerHTML = '<div style="padding:2rem;text-align:center;color:#888;">No hay requisiciones.</div>'; return; }
   cont.innerHTML = lista.map(f => {
     const fecha = new Date(f.fecha).toLocaleDateString('es-MX');
     return `<div class="list-item" onclick="seleccionarPdfDrive('${f.id}')"><span class="name">${escapeHtml(f.name)}</span><span class="date">${fecha}</span></div>`;
@@ -595,51 +781,39 @@ function renderListaDrive(lista) {
 function filtrarListaDrive() {
   const q = document.getElementById('drive-search').value.toLowerCase().trim();
   if (!q) { renderListaDrive(_driveCache); return; }
-  const filtrada = _driveCache.filter(f => f.name.toLowerCase().indexOf(q) >= 0);
-  renderListaDrive(filtrada);
+  renderListaDrive(_driveCache.filter(f => f.name.toLowerCase().indexOf(q) >= 0));
 }
 
 async function seleccionarPdfDrive(fileId) {
   const token = getToken();
   if (!token) { abrirReloginModal(); return; }
-
   const cont = document.getElementById('drive-list');
   cont.innerHTML = '<div style="padding:2rem;text-align:center;color:#888;">Descargando...</div>';
-
   try {
     const r = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
+      method: 'POST', headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({ action: 'descargarRequisicion', token, fileId })
     });
     const data = await r.json();
-
     if (!data.ok) {
-      if (/sesion/i.test(data.error || '')) {
-        cerrarSelectorDrive();
-        abrirReloginModal();
-        return;
-      }
+      if (/sesion/i.test(data.error || '')) { cerrarSelectorDrive(); abrirReloginModal(); return; }
       cont.innerHTML = '<div style="padding:2rem;color:#A32D2D;">' + escapeHtml(data.error) + '</div>';
       return;
     }
-
     const bin = atob(data.base64);
     const bytes = new Uint8Array(bin.length);
     for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
     const pdf = await pdfjsLib.getDocument({ data: bytes.buffer }).promise;
     const meta = await pdf.getMetadata();
     const subject = (meta.info && meta.info.Subject) || '';
-
     if (subject.indexOf(META_PREFIX) !== 0) {
       cont.innerHTML = '<div style="padding:2rem;color:#A32D2D;">Este PDF no tiene metadata embebida.</div>';
       return;
     }
-
     const datos = JSON.parse(subject.substring(META_PREFIX.length));
     aplicarDatos(datos);
     cerrarSelectorDrive();
-    showToast('Datos cargados desde <b>' + escapeHtml(data.name) + '</b>. Modifica lo necesario y envia.', 'ok');
+    showToast('Datos cargados desde <b>' + escapeHtml(data.name) + '</b>.', 'ok');
   } catch (err) {
     cont.innerHTML = '<div style="padding:2rem;color:#A32D2D;">Error: ' + escapeHtml(err.message) + '</div>';
   }
@@ -649,27 +823,441 @@ async function cargarDesdePDF(event) {
   const file = event.target.files[0];
   if (!file) return;
   event.target.value = '';
-
   try {
     const buffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
     const meta = await pdf.getMetadata();
     const subject = (meta.info && meta.info.Subject) || '';
-
     if (subject.indexOf(META_PREFIX) !== 0) {
-      showToast('Este PDF no fue generado por el sistema CAMI o no tiene metadata.', 'err');
+      showToast('Este PDF no fue generado por el sistema CAMI.', 'err');
       return;
     }
-
     const datos = JSON.parse(subject.substring(META_PREFIX.length));
     aplicarDatos(datos);
-    showToast('Datos cargados desde PDF local. Modifica lo necesario y envia.', 'ok');
+    showToast('Datos cargados desde PDF local.', 'ok');
   } catch (err) {
     showToast('Error leyendo PDF: ' + escapeHtml(err.message), 'err');
   }
 }
 
-// ── GENERAR PDF Y ENVIAR ──────────────────────────────────────
+// ── PESTAÑA APROBAR ───────────────────────────────────────────
+
+async function cargarPorAprobar() {
+  if (!tieneApp(APP_KEY_APROBAR)) return;
+  const token = getToken();
+  if (!token) { abrirReloginModal(); return; }
+
+  const cont = document.getElementById('lista-aprobar');
+  cont.innerHTML = '<div class="lista-vacia">Cargando...</div>';
+
+  try {
+    const r = await fetch(SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'listarPorAprobar', token })
+    });
+    const data = await r.json();
+    if (!data.ok) {
+      if (/sesion/i.test(data.error || '')) { abrirReloginModal(); return; }
+      cont.innerHTML = '<div class="lista-vacia" style="color:#A32D2D">' + escapeHtml(data.error) + '</div>';
+      return;
+    }
+    _aprobarCache = data.requisiciones || [];
+    renderListaAprobar();
+    actualizarBadge('aprobar', _aprobarCache.length);
+  } catch (err) {
+    cont.innerHTML = '<div class="lista-vacia" style="color:#A32D2D">Error: ' + escapeHtml(err.message) + '</div>';
+  }
+}
+
+function actualizarBadge(tipo, n) {
+  const badge = document.getElementById('badge-' + tipo);
+  if (n > 0) {
+    badge.textContent = n;
+    badge.style.display = '';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+function renderListaAprobar() {
+  const cont = document.getElementById('lista-aprobar');
+  if (!_aprobarCache.length) {
+    cont.innerHTML = '<div class="lista-vacia">No hay requisiciones por aprobar. ✓</div>';
+    return;
+  }
+  cont.innerHTML = _aprobarCache.map((req, idx) => {
+    const pendientes = req.conceptos.filter(c => String(c.estado).toLowerCase() === 'pendiente').length;
+    return `
+      <div class="req-card" onclick="abrirAprobarModal(${idx})">
+        <div class="req-card-row">
+          <div style="flex:1;min-width:200px">
+            <div class="folio">${escapeHtml(req.folio)}</div>
+            <div class="meta">
+              <span><b>${escapeHtml(req.solicitante)}</b></span>
+              <span>${escapeHtml(req.proyecto)}</span>
+              <span>${escapeHtml(req.categoria)}</span>
+              <span>${formatDateMx(req.fecha_solicitud)}</span>
+            </div>
+          </div>
+          <div style="text-align:right">
+            <div class="monto">${fmt(req.monto_solicitado)}</div>
+            <span class="pendientes">${pendientes} pendiente${pendientes!==1?'s':''}</span>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function abrirAprobarModal(idx) {
+  const req = _aprobarCache[idx];
+  if (!req) return;
+  document.getElementById('aprobar-modal-folio').textContent = req.folio;
+  renderAprobarModalBody(req);
+  document.getElementById('aprobar-modal').classList.add('show');
+}
+
+function cerrarAprobarModal() {
+  document.getElementById('aprobar-modal').classList.remove('show');
+}
+
+function renderAprobarModalBody(req) {
+  const body = document.getElementById('aprobar-modal-body');
+  body.innerHTML = `
+    <div class="detail-grid">
+      <div class="cell"><div class="label">Solicitante</div><div class="val">${escapeHtml(req.solicitante)}</div></div>
+      <div class="cell"><div class="label">WhatsApp</div><div class="val">${escapeHtml(req.whatsapp || '')}</div></div>
+      <div class="cell"><div class="label">Fecha</div><div class="val">${formatDateMx(req.fecha_solicitud)}</div></div>
+      <div class="cell"><div class="label">Proyecto</div><div class="val">${escapeHtml(req.proyecto)}</div></div>
+      <div class="cell"><div class="label">Categoria</div><div class="val">${escapeHtml(req.categoria)}</div></div>
+      <div class="cell"><div class="label">Monto Solicitado</div><div class="val">${fmt(req.monto_solicitado)}</div></div>
+    </div>
+    ${req.observaciones ? `<div style="background:#f5f3ee;border-left:3px solid #d3d1c7;padding:8px 12px;margin-bottom:14px;font-size:11px;color:#4A4A48"><b>Observaciones:</b> ${escapeHtml(req.observaciones)}</div>` : ''}
+    ${req.pdf_url ? `<div style="margin-bottom:14px"><a href="${req.pdf_url}" target="_blank" style="font-size:11px;color:#2A5A8C">Ver PDF original →</a></div>` : ''}
+    <div class="section-title" style="margin-bottom:10px">Conceptos</div>
+    <div id="conceptos-lista">
+      ${req.conceptos.map((c, idx) => renderConceptoAprobar(c, idx, req.folio)).join('')}
+    </div>
+  `;
+}
+
+function renderConceptoAprobar(c, idx, folio) {
+  const estado = String(c.estado).toLowerCase();
+  const estadoClass = estado === 'aprobado' ? 'aprobado' : estado === 'rechazado' ? 'rechazado' : '';
+  const decidible = estado === 'pendiente';
+  return `
+    <div class="concepto-row ${estadoClass}" id="concepto-${escapeAttr(c.id_concepto)}">
+      <div class="head">
+        <div class="desc">${escapeHtml(c.concepto)}</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="estado-badge e-${estado}">${escapeHtml(c.estado)}</span>
+          <span style="font-weight:700;font-size:13px">${fmt(c.monto)}</span>
+        </div>
+      </div>
+      <div class="info-grid">
+        <div class="row"><span class="lbl">Banco:</span><span>${escapeHtml(c.banco)}</span></div>
+        <div class="row"><span class="lbl">Cuenta:</span><span style="font-family:monospace">${escapeHtml(c.cuenta)}</span></div>
+        <div class="row"><span class="lbl">Receptor:</span><span>${escapeHtml(c.receptor)}</span></div>
+        <div class="row"><span class="lbl">Empresa:</span><span>${escapeHtml(c.empresa)}</span></div>
+      </div>
+      ${c.motivo_rechazo ? `<div class="motivo"><b>Motivo:</b> ${escapeHtml(c.motivo_rechazo)}</div>` : ''}
+      ${decidible ? `
+        <div class="actions">
+          <button class="btn-aprobar" onclick="aprobarConcepto('${escapeAttr(c.id_concepto)}')">Aprobar</button>
+          <button class="btn-rechazar" onclick="abrirRechazoModal('${escapeAttr(c.id_concepto)}', '${escapeAttr(c.concepto).replace(/'/g, '&#39;')}')">Rechazar</button>
+        </div>` : ''}
+    </div>`;
+}
+
+async function aprobarConcepto(idConcepto) {
+  const token = getToken();
+  if (!token) { abrirReloginModal(); return; }
+  const btn = event.target;
+  btn.disabled = true; btn.textContent = '...';
+
+  try {
+    const r = await fetch(SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'aprobarConcepto', token, id_concepto: idConcepto })
+    });
+    const data = await r.json();
+    if (!data.ok) {
+      if (/sesion/i.test(data.error || '')) { cerrarAprobarModal(); abrirReloginModal(); return; }
+      showToast(escapeHtml(data.error), 'err');
+      btn.disabled = false; btn.textContent = 'Aprobar';
+      return;
+    }
+    showToast('Concepto aprobado.', 'ok');
+    // Si ya no quedan pendientes, cerrar modal y refrescar
+    if (data.conceptos_pendientes === 0) {
+      cerrarAprobarModal();
+    } else {
+      // Actualizar el cache local del concepto
+      actualizarConceptoEnCache(idConcepto, 'Aprobado', '');
+      // Re-render del modal con los nuevos estados
+      const folio = data.requisicion_estado ? findFolioByConcepto(idConcepto) : null;
+      if (folio) {
+        const req = _aprobarCache.find(r => r.folio === folio);
+        if (req) renderAprobarModalBody(req);
+      }
+    }
+    // Refrescar la lista de fondo
+    cargarPorAprobar();
+  } catch (err) {
+    showToast('Error: ' + escapeHtml(err.message), 'err');
+    btn.disabled = false; btn.textContent = 'Aprobar';
+  }
+}
+
+function findFolioByConcepto(idConcepto) {
+  for (let i = 0; i < _aprobarCache.length; i++) {
+    if (_aprobarCache[i].conceptos.some(c => c.id_concepto === idConcepto)) {
+      return _aprobarCache[i].folio;
+    }
+  }
+  return null;
+}
+
+function actualizarConceptoEnCache(idConcepto, nuevoEstado, motivo) {
+  for (let i = 0; i < _aprobarCache.length; i++) {
+    const c = _aprobarCache[i].conceptos.find(c => c.id_concepto === idConcepto);
+    if (c) {
+      c.estado = nuevoEstado;
+      if (motivo) c.motivo_rechazo = motivo;
+      return;
+    }
+  }
+}
+
+function abrirRechazoModal(idConcepto, concepto) {
+  _conceptoEnRechazo = idConcepto;
+  document.getElementById('rechazo-concepto').value = concepto;
+  document.getElementById('rechazo-motivo').value = '';
+  document.getElementById('rechazo-error').textContent = '';
+  document.getElementById('rechazo-modal').classList.add('show');
+  setTimeout(() => document.getElementById('rechazo-motivo').focus(), 100);
+}
+
+function cerrarRechazoModal() {
+  document.getElementById('rechazo-modal').classList.remove('show');
+  _conceptoEnRechazo = null;
+}
+
+async function confirmarRechazo() {
+  const motivo = document.getElementById('rechazo-motivo').value.trim();
+  const err = document.getElementById('rechazo-error');
+  const btn = document.getElementById('btn-confirmar-rechazo');
+  if (!motivo) { err.textContent = 'El motivo es obligatorio'; return; }
+  if (!_conceptoEnRechazo) return;
+
+  const token = getToken();
+  if (!token) { abrirReloginModal(); return; }
+
+  btn.disabled = true; btn.textContent = 'Enviando...';
+
+  try {
+    const r = await fetch(SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'rechazarConcepto', token, id_concepto: _conceptoEnRechazo, motivo })
+    });
+    const data = await r.json();
+    if (!data.ok) {
+      if (/sesion/i.test(data.error || '')) { cerrarRechazoModal(); cerrarAprobarModal(); abrirReloginModal(); return; }
+      err.textContent = data.error || 'Error';
+      btn.disabled = false; btn.textContent = 'Confirmar Rechazo';
+      return;
+    }
+    actualizarConceptoEnCache(_conceptoEnRechazo, 'Rechazado', motivo);
+    cerrarRechazoModal();
+    if (data.conceptos_pendientes === 0) {
+      cerrarAprobarModal();
+    } else {
+      const folio = findFolioByConcepto(_conceptoEnRechazo);
+      if (folio) {
+        const req = _aprobarCache.find(r => r.folio === folio);
+        if (req) renderAprobarModalBody(req);
+      }
+    }
+    showToast('Concepto rechazado.', 'ok');
+    cargarPorAprobar();
+    btn.disabled = false; btn.textContent = 'Confirmar Rechazo';
+  } catch (e) {
+    err.textContent = 'Error: ' + e.message;
+    btn.disabled = false; btn.textContent = 'Confirmar Rechazo';
+  }
+}
+
+// ── PESTAÑA PAGAR ─────────────────────────────────────────────
+
+async function cargarPorPagar() {
+  if (!tieneApp(APP_KEY_PAGAR)) return;
+  const token = getToken();
+  if (!token) { abrirReloginModal(); return; }
+
+  const cont = document.getElementById('lista-pagar');
+  cont.innerHTML = '<div class="lista-vacia">Cargando...</div>';
+
+  try {
+    const r = await fetch(SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'listarPorPagar', token })
+    });
+    const data = await r.json();
+    if (!data.ok) {
+      if (/sesion/i.test(data.error || '')) { abrirReloginModal(); return; }
+      cont.innerHTML = '<div class="lista-vacia" style="color:#A32D2D">' + escapeHtml(data.error) + '</div>';
+      return;
+    }
+    _pagarCache = data.requisiciones || [];
+    renderListaPagar();
+    actualizarBadge('pagar', _pagarCache.length);
+  } catch (err) {
+    cont.innerHTML = '<div class="lista-vacia" style="color:#A32D2D">Error: ' + escapeHtml(err.message) + '</div>';
+  }
+}
+
+function renderListaPagar() {
+  const cont = document.getElementById('lista-pagar');
+  if (!_pagarCache.length) {
+    cont.innerHTML = '<div class="lista-vacia">No hay pagos pendientes. ✓</div>';
+    return;
+  }
+  cont.innerHTML = _pagarCache.map((req, idx) => {
+    const estadoCls = String(req.estado).toLowerCase().indexOf('parcial') !== -1 ? 'e-parcial' : 'e-aprobada';
+    return `
+      <div class="req-card" onclick="abrirPagarModal(${idx})">
+        <div class="req-card-row">
+          <div style="flex:1;min-width:200px">
+            <div class="folio">${escapeHtml(req.folio)}</div>
+            <div class="meta">
+              <span><b>${escapeHtml(req.solicitante)}</b></span>
+              <span>${escapeHtml(req.proyecto)}</span>
+              <span>${escapeHtml(req.categoria)}</span>
+              <span>Aprobada ${formatDateMx(req.fecha_aprobacion)}</span>
+            </div>
+          </div>
+          <div style="text-align:right">
+            <div class="monto">${fmt(req.monto_aprobado)}</div>
+            <span class="estado-badge ${estadoCls}">${escapeHtml(req.estado)}</span>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function abrirPagarModal(idx) {
+  const req = _pagarCache[idx];
+  if (!req) return;
+  _reqEnPago = req;
+  document.getElementById('pagar-modal-folio').textContent = req.folio;
+  const aprobados = req.conceptos.filter(c => String(c.estado).toLowerCase() === 'aprobado');
+  const rechazados = req.conceptos.filter(c => String(c.estado).toLowerCase() === 'rechazado');
+
+  const body = document.getElementById('pagar-modal-body');
+  body.innerHTML = `
+    <div class="detail-grid">
+      <div class="cell"><div class="label">Solicitante</div><div class="val">${escapeHtml(req.solicitante)}</div></div>
+      <div class="cell"><div class="label">Proyecto</div><div class="val">${escapeHtml(req.proyecto)}</div></div>
+      <div class="cell"><div class="label">Categoria</div><div class="val">${escapeHtml(req.categoria)}</div></div>
+    </div>
+    ${req.observaciones ? `<div style="background:#f5f3ee;border-left:3px solid #d3d1c7;padding:8px 12px;margin-bottom:14px;font-size:11px;color:#4A4A48"><b>Observaciones:</b> ${escapeHtml(req.observaciones)}</div>` : ''}
+    ${req.pdf_url ? `<div style="margin-bottom:14px"><a href="${req.pdf_url}" target="_blank" style="font-size:11px;color:#2A5A8C">Ver PDF original →</a></div>` : ''}
+
+    <div class="section-title" style="margin-bottom:10px">Conceptos a pagar (aprobados)</div>
+    ${aprobados.map(c => renderConceptoPagar(c, true)).join('')}
+
+    ${rechazados.length ? `
+      <div class="section-title" style="margin-top:14px;margin-bottom:10px">Conceptos rechazados (no se pagan)</div>
+      ${rechazados.map(c => renderConceptoPagar(c, false)).join('')}
+    ` : ''}
+
+    <div style="background:#1a1a18;color:#fff;padding:12px 16px;border-radius:8px;margin-top:14px;display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:11px;letter-spacing:.06em;text-transform:uppercase">Total a pagar</span>
+      <span style="font-size:18px;font-weight:700">${fmt(req.monto_aprobado)} MXN</span>
+    </div>
+
+    <div class="modal-actions" style="margin-top:18px">
+      <button class="btn-secondary" onclick="cerrarPagarModal()">Cerrar</button>
+      <button class="btn-success" onclick="abrirConfirmarPago()">Marcar como Pagada</button>
+    </div>
+  `;
+  document.getElementById('pagar-modal').classList.add('show');
+}
+
+function renderConceptoPagar(c, esAprobado) {
+  const cls = esAprobado ? 'aprobado' : 'rechazado';
+  return `
+    <div class="concepto-row ${cls}">
+      <div class="head">
+        <div class="desc">${escapeHtml(c.concepto)}</div>
+        <span style="font-weight:700;font-size:13px">${fmt(c.monto)}</span>
+      </div>
+      <div class="info-grid">
+        <div class="row"><span class="lbl">Banco:</span><span>${escapeHtml(c.banco)}</span></div>
+        <div class="row"><span class="lbl">Cuenta:</span><span style="font-family:monospace">${escapeHtml(c.cuenta)}</span></div>
+        <div class="row"><span class="lbl">Receptor:</span><span>${escapeHtml(c.receptor)}</span></div>
+        <div class="row"><span class="lbl">Empresa:</span><span>${escapeHtml(c.empresa)}</span></div>
+      </div>
+      ${c.motivo_rechazo ? `<div class="motivo"><b>Motivo:</b> ${escapeHtml(c.motivo_rechazo)}</div>` : ''}
+    </div>`;
+}
+
+function cerrarPagarModal() {
+  document.getElementById('pagar-modal').classList.remove('show');
+  _reqEnPago = null;
+}
+
+function abrirConfirmarPago() {
+  if (!_reqEnPago) return;
+  document.getElementById('confirmar-pago-resumen').innerHTML =
+    'Vas a marcar la requisicion <b>' + escapeHtml(_reqEnPago.folio) + '</b> como pagada por <b>' + fmt(_reqEnPago.monto_aprobado) + '</b>. Esto generara una transaccion en TRANSACCIONES.';
+  document.getElementById('confirmar-pago-fecha').value = new Date().toISOString().split('T')[0];
+  document.getElementById('confirmar-pago-error').textContent = '';
+  document.getElementById('confirmar-pago-modal').classList.add('show');
+}
+
+function cerrarConfirmarPago() {
+  document.getElementById('confirmar-pago-modal').classList.remove('show');
+}
+
+async function confirmarPagoFinal() {
+  const fecha = document.getElementById('confirmar-pago-fecha').value;
+  const err = document.getElementById('confirmar-pago-error');
+  const btn = document.getElementById('btn-confirmar-pago-final');
+  if (!fecha) { err.textContent = 'Fecha requerida'; return; }
+  if (!_reqEnPago) return;
+
+  const token = getToken();
+  if (!token) { abrirReloginModal(); return; }
+
+  btn.disabled = true; btn.textContent = 'Procesando...';
+  err.textContent = '';
+
+  try {
+    const r = await fetch(SCRIPT_URL, {
+      method: 'POST', headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        action: 'marcarPagada', token, folio: _reqEnPago.folio, fecha_pago: fecha
+      })
+    });
+    const data = await r.json();
+    if (!data.ok) {
+      if (/sesion/i.test(data.error || '')) { cerrarConfirmarPago(); cerrarPagarModal(); abrirReloginModal(); return; }
+      err.textContent = data.error || 'Error';
+      btn.disabled = false; btn.textContent = 'Confirmar';
+      return;
+    }
+    cerrarConfirmarPago();
+    cerrarPagarModal();
+    showToast('Pagada. ID Banco asignado: <b>' + data.id_banco + '</b>. Monto: ' + fmt(data.monto_pagado), 'ok');
+    cargarPorPagar();
+    btn.disabled = false; btn.textContent = 'Confirmar';
+  } catch (e) {
+    err.textContent = 'Error: ' + e.message;
+    btn.disabled = false; btn.textContent = 'Confirmar';
+  }
+}
+
+// ── ENVIAR REQUISICION (CREAR) ────────────────────────────────
 
 async function enviarRequisicion() {
   const token = getToken();
@@ -677,14 +1265,13 @@ async function enviarRequisicion() {
 
   const d = recolectar();
 
-  // Validaciones
   if (!d.solicitante)        return showToast('Solicitante requerido.', 'err');
   if (d.whatsapp.length !== 10) return showToast('WhatsApp debe tener 10 digitos.', 'err');
   if (!d.fecha)              return showToast('Fecha requerida.', 'err');
   if (!d.proyecto)           return showToast('Selecciona un proyecto.', 'err');
   if (!d.categoria)          return showToast('Selecciona una categoria.', 'err');
   if (!d.conceptos.length)   return showToast('Agrega al menos un concepto.', 'err');
-  if (d.cuentasInvalidas)    return showToast('Hay cuentas con formato invalido. Revisa los renglones marcados en rojo.', 'err');
+  if (d.cuentasInvalidas)    return showToast('Hay cuentas con formato invalido.', 'err');
 
   for (let i = 0; i < d.conceptos.length; i++) {
     const c = d.conceptos[i];
@@ -700,11 +1287,8 @@ async function enviarRequisicion() {
     const total = d.conceptos.reduce((a, c) => a + c.monto, 0);
     const folioPreview = simplificarProyecto(d.proyecto) + '-XXX-' + d.fecha;
 
-    // Generar PDF client-side
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
-
-    // Embeber metadata en subject (igual que cami-presupuesto)
     const metadataJSON = JSON.stringify(d);
     doc.setProperties({
       title: 'Requisicion - ' + d.proyecto,
@@ -712,32 +1296,23 @@ async function enviarRequisicion() {
       keywords: 'CAMI Requisicion ' + d.proyecto,
       creator: 'CAMI Sistema'
     });
-
     construirPDF(doc, d, total, folioPreview);
 
     btn.textContent = 'Enviando...';
     const pdfB64 = doc.output('datauristring').split(',')[1];
 
     const resp = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
+      method: 'POST', headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({
-        action: 'crearRequisicion',
-        token,
-        fecha: d.fecha,
-        solicitante: d.solicitante,
-        whatsapp: d.whatsapp,
-        proyecto: d.proyecto,
-        categoria: d.categoria,
-        observaciones: d.observaciones,
-        conceptos: d.conceptos,
-        pdf: pdfB64
+        action: 'crearRequisicion', token,
+        fecha: d.fecha, solicitante: d.solicitante, whatsapp: d.whatsapp,
+        proyecto: d.proyecto, categoria: d.categoria, observaciones: d.observaciones,
+        conceptos: d.conceptos, pdf: pdfB64
       })
     });
     const result = await resp.json();
 
     if (result.ok) {
-      // Re-generar el PDF con el folio real para descarga local
       const doc2 = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
       doc2.setProperties({
         title: 'Requisicion - ' + result.folio,
@@ -769,7 +1344,7 @@ function simplificarProyecto(p) {
     .replace(/[^A-Za-z0-9]/g, '_').toUpperCase();
 }
 
-// ── CONSTRUCCION DEL PDF (jsPDF) ──────────────────────────────
+// ── PDF (sin cambios respecto a v anterior) ───────────────────
 
 function construirPDF(doc, d, total, folio) {
   const W = 215.9, H = 279.4;
@@ -777,7 +1352,6 @@ function construirPDF(doc, d, total, folio) {
   const cW = W - pL - pR;
   let y = 12;
 
-  // Masthead
   const headerH = 28;
   doc.setFillColor(26, 26, 24); doc.rect(0, 0, W, headerH + 6, 'F');
   if (_logoB64) {
@@ -787,7 +1361,6 @@ function construirPDF(doc, d, total, folio) {
   doc.text('CAMI', pL + 28, 14);
   doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(180, 180, 180);
   doc.text('COMERCIALIZADORA DE ACEROS MANUFACTURADOS PARA LA INDUSTRIA', pL + 28, 19);
-
   doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'normal'); doc.setFontSize(8);
   doc.text('CONTROL FINANCIERO', W - pR, 11, { align: 'right' });
   doc.setFont('helvetica', 'bold'); doc.setFontSize(13);
@@ -797,14 +1370,12 @@ function construirPDF(doc, d, total, folio) {
 
   y = headerH + 14;
 
-  // Estado
   doc.setFillColor(255, 244, 214); doc.setDrawColor(255, 244, 214);
   doc.roundedRect(pL, y - 4, 60, 7, 1, 1, 'F');
   doc.setTextColor(139, 105, 20); doc.setFont('helvetica', 'bold'); doc.setFontSize(8);
   doc.text('PENDIENTE DE APROBACION', pL + 30, y + 1, { align: 'center' });
   y += 8;
 
-  // Solicitante
   doc.setTextColor(74, 74, 72); doc.setFont('helvetica', 'bold'); doc.setFontSize(8);
   doc.text('DATOS DEL SOLICITANTE', pL, y);
   doc.setDrawColor(211, 209, 199); doc.setLineWidth(0.2);
@@ -817,7 +1388,6 @@ function construirPDF(doc, d, total, folio) {
   ]);
   y += 12;
 
-  // Proyecto y categoria
   doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(74, 74, 72);
   doc.text('PROYECTO Y CATEGORIA', pL, y);
   doc.line(pL, y + 1, pL + cW, y + 1);
@@ -828,7 +1398,6 @@ function construirPDF(doc, d, total, folio) {
   ]);
   y += 12;
 
-  // Tabla de conceptos
   doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(74, 74, 72);
   doc.text('CONCEPTOS A PAGAR', pL, y);
   doc.line(pL, y + 1, pL + cW, y + 1);
@@ -844,7 +1413,6 @@ function construirPDF(doc, d, total, folio) {
     { x: pL + 168,      w: cW - 168 + pL, h: 'Monto', align: 'right' }
   ];
 
-  // Encabezado de tabla
   doc.setFillColor(26, 26, 24); doc.rect(pL, y, cW, 6, 'F');
   doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(7);
   cols.forEach(c => {
@@ -853,22 +1421,16 @@ function construirPDF(doc, d, total, folio) {
   });
   y += 6;
 
-  // Filas
   doc.setTextColor(0, 0, 0); doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5);
   d.conceptos.forEach((c, i) => {
     const conceptoLines = doc.splitTextToSize(c.concepto, cols[1].w - 2);
     const receptorLines = doc.splitTextToSize(c.receptor, cols[4].w - 2);
-    const empresaLines = doc.splitTextToSize(c.empresa, cols[5].w - 2);
+    const empresaLines  = doc.splitTextToSize(c.empresa, cols[5].w - 2);
     const rh = Math.max(6, conceptoLines.length * 3.5, receptorLines.length * 3.5, empresaLines.length * 3.5) + 2;
-
     if (y + rh > H - 50) { doc.addPage(); y = 14; }
-
-    if (i % 2 === 1) {
-      doc.setFillColor(248, 247, 244); doc.rect(pL, y, cW, rh, 'F');
-    }
+    if (i % 2 === 1) { doc.setFillColor(248, 247, 244); doc.rect(pL, y, cW, rh, 'F'); }
     doc.setDrawColor(230, 228, 220); doc.setLineWidth(0.1);
     doc.line(pL, y + rh, pL + cW, y + rh);
-
     doc.text(String(i + 1), cols[0].x + cols[0].w / 2, y + 4, { align: 'center' });
     conceptoLines.forEach((l, j) => doc.text(l, cols[1].x + 1, y + 4 + j * 3.5));
     doc.text(c.banco, cols[2].x + 1, y + 4);
@@ -883,18 +1445,15 @@ function construirPDF(doc, d, total, folio) {
     y += rh;
   });
 
-  // Total
   y += 2;
   doc.setDrawColor(26, 26, 24); doc.setLineWidth(0.4);
   doc.line(pL, y, pL + cW, y);
   y += 4;
   doc.setFont('helvetica', 'bold'); doc.setFontSize(10);
   doc.text('TOTAL SOLICITADO:', pL + cW - 60, y);
-  doc.text('$' + total.toLocaleString('es-MX', { minimumFractionDigits: 2 }) + ' MXN',
-           pL + cW - 1, y, { align: 'right' });
+  doc.text('$' + total.toLocaleString('es-MX', { minimumFractionDigits: 2 }) + ' MXN', pL + cW - 1, y, { align: 'right' });
   y += 8;
 
-  // Observaciones
   if (d.observaciones) {
     if (y > H - 60) { doc.addPage(); y = 14; }
     doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(74, 74, 72);
@@ -911,11 +1470,8 @@ function construirPDF(doc, d, total, folio) {
     y += obsH + 6;
   }
 
-  // Footer: firma + QR
   if (y > H - 50) { doc.addPage(); y = 14; }
   y = Math.max(y, H - 48);
-
-  // Firma (izquierda)
   const firmaW = 70;
   doc.setDrawColor(26, 26, 24); doc.setLineWidth(0.3);
   doc.line(pL, y + 22, pL + firmaW, y + 22);
@@ -924,7 +1480,6 @@ function construirPDF(doc, d, total, folio) {
   doc.setFont('helvetica', 'bold'); doc.setTextColor(0, 0, 0);
   doc.text(d.solicitante, pL + firmaW / 2, y + 30, { align: 'center' });
 
-  // QR (derecha)
   const verifUrl = SCRIPT_URL + '?accion=verificar&folio=' + encodeURIComponent(folio);
   try {
     const qrCanvas = generarQR(verifUrl);
@@ -935,9 +1490,7 @@ function construirPDF(doc, d, total, folio) {
       doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(120, 120, 120);
       doc.text('Escanea para verificar', qrX + qrSize / 2, y + qrSize + 3, { align: 'center' });
     }
-  } catch (e) {
-    console.warn('QR no generado:', e.message);
-  }
+  } catch (e) { console.warn('QR no generado:', e.message); }
 }
 
 function drawInfoRow(doc, x, y, items) {
@@ -952,36 +1505,17 @@ function drawInfoRow(doc, x, y, items) {
   });
 }
 
-function formatDateMx(s) {
-  if (!s) return '';
-  const parts = s.split('-');
-  if (parts.length !== 3) return s;
-  return parts[2] + '/' + parts[1] + '/' + parts[0];
-}
-
 function generarQR(text) {
-  // qrcodejs renderiza en un div, no devuelve canvas directamente.
-  // Estrategia: crear un div oculto, dejar que renderice, capturar la imagen.
   const tempDiv = document.createElement('div');
   tempDiv.style.position = 'absolute';
   tempDiv.style.left = '-9999px';
   document.body.appendChild(tempDiv);
   try {
-    new QRCode(tempDiv, {
-      text: text,
-      width: 240,
-      height: 240,
-      colorDark: '#000000',
-      colorLight: '#ffffff',
-      correctLevel: QRCode.CorrectLevel.M
-    });
+    new QRCode(tempDiv, { text, width: 240, height: 240, colorDark: '#000', colorLight: '#fff', correctLevel: QRCode.CorrectLevel.M });
     const canvas = tempDiv.querySelector('canvas');
     if (canvas) {
-      const result = canvas; // Tomamos referencia antes de borrar el div
-      // Clonar el canvas porque al borrar el div se pierde
       const cloned = document.createElement('canvas');
-      cloned.width = canvas.width;
-      cloned.height = canvas.height;
+      cloned.width = canvas.width; cloned.height = canvas.height;
       cloned.getContext('2d').drawImage(canvas, 0, 0);
       document.body.removeChild(tempDiv);
       return cloned;
