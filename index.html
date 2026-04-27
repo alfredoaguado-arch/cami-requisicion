@@ -1528,13 +1528,16 @@ function construirPDF(doc, d, total, folio) {
   // Header negro
   const headerH = 26;
   doc.setFillColor(26, 26, 24); doc.rect(0, 0, W, headerH + 4, 'F');
+  // v3.1.2: logo BLANCO sobre fondo negro (incluye el texto "CAMI" como
+  // parte del arte). No duplicamos "CAMI" en texto separado.
   if (_logoB64) {
-    try { doc.addImage(_logoB64, 'PNG', pL, 4, 22, 22, '', 'FAST'); } catch (e) {}
+    try { doc.addImage(_logoB64, 'PNG', pL, 2, 32, 24, '', 'FAST'); } catch (e) {}
   }
-  doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(20);
-  doc.text('CAMI', pL + 28, 13);
+  // Subtitulo a la derecha del logo, vertical-centrado en el masthead
   doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(180, 180, 180);
-  doc.text('COMERCIALIZADORA DE ACEROS MANUFACTURADOS PARA LA INDUSTRIA', pL + 28, 18);
+  doc.text('COMERCIALIZADORA DE ACEROS', pL + 36, 14);
+  doc.text('MANUFACTURADOS PARA LA INDUSTRIA', pL + 36, 18);
+  // Bloque derecho: tipo de documento + folio
   doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'normal'); doc.setFontSize(8);
   doc.text('CONTROL FINANCIERO', W - pR, 10, { align: 'right' });
   doc.setFont('helvetica', 'bold'); doc.setFontSize(13);
@@ -1572,16 +1575,18 @@ function construirPDF(doc, d, total, folio) {
   doc.line(pL, y + 1, pL + cW, y + 1);
   y += 4;
 
-  // v3.1: columnas optimizadas para landscape (251.4mm utiles)
+  // v3.1.1: columnas optimizadas para landscape (251.4mm utiles)
+  // Bug fix: la columna Monto antes tenia w = cW - 226 + pL (= 39.4mm)
+  // y se salia de la pagina por 14mm. Ahora todas las columnas suman cW.
   // # | Concepto | Banco | Cuenta | Receptor | Empresa | Monto
   const cols = [
-    { x: pL,            w: 8,   h: '#',        align: 'center' },
-    { x: pL + 8,        w: 60,  h: 'Concepto', align: 'left'   },
-    { x: pL + 68,       w: 26,  h: 'Banco',    align: 'left'   },
-    { x: pL + 94,       w: 42,  h: 'Cuenta',   align: 'left'   },
-    { x: pL + 136,      w: 50,  h: 'Receptor', align: 'left'   },
-    { x: pL + 186,      w: 40,  h: 'Empresa',  align: 'left'   },
-    { x: pL + 226,      w: cW - 226 + pL, h: 'Monto', align: 'right' }
+    { x: pL,            w: 7,    h: '#',        align: 'center' },
+    { x: pL + 7,        w: 56,   h: 'Concepto', align: 'left'   },
+    { x: pL + 63,       w: 25,   h: 'Banco',    align: 'left'   },
+    { x: pL + 88,       w: 40,   h: 'Cuenta',   align: 'left'   },
+    { x: pL + 128,      w: 46,   h: 'Receptor', align: 'left'   },
+    { x: pL + 174,      w: 38,   h: 'Empresa',  align: 'left'   },
+    { x: pL + 212,      w: cW - 212, h: 'Monto', align: 'right' }
   ];
 
   doc.setFillColor(26, 26, 24); doc.rect(pL, y, cW, 6, 'F');
