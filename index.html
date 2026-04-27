@@ -18,7 +18,6 @@ body{background:#EFEFED;font-family:'Courier New',monospace;min-height:100vh;pad
 .doc-sub{font-size:15px;font-weight:700;color:#fff;margin-top:2px}
 .user-bar{background:#f5f3ee;padding:8px 2rem;font-size:11px;color:#4A4A48;display:flex;justify-content:space-between;border-bottom:0.5px solid #d3d1c7}
 .user-bar a{color:#A32D2D;text-decoration:none;font-weight:700}
-/* Pestañas */
 .tabs{display:flex;background:#fff;border-bottom:1px solid #d3d1c7;padding:0 1rem}
 .tab{padding:12px 18px;cursor:pointer;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#888780;border-bottom:3px solid transparent;display:flex;align-items:center;gap:8px;transition:color .15s,border-color .15s}
 .tab:hover{color:#4A4A48}
@@ -63,7 +62,6 @@ textarea{resize:vertical;min-height:60px}
 .toast.err{background:#FCEBEB;color:#A32D2D;border:0.5px solid #F7C1C1}
 .toast.info{background:#E8F0F8;color:#2A5A8C;border:0.5px solid #B8D2E8}
 
-/* Listas (aprobar/pagar) */
 .lista-vacia{text-align:center;padding:3rem 2rem;color:#888780;font-size:13px}
 .req-card{border:1px solid #d3d1c7;border-radius:8px;padding:14px 16px;margin-bottom:10px;background:#fafaf8;cursor:pointer;transition:background .15s,border-color .15s}
 .req-card:hover{background:#f5f3ee;border-color:#888780}
@@ -73,21 +71,18 @@ textarea{resize:vertical;min-height:60px}
 .req-card .monto{font-weight:700;color:#1a1a18;font-size:14px}
 .req-card .pendientes{font-size:10px;background:#FFF4D6;color:#8B6914;padding:3px 8px;border-radius:10px;font-weight:700;letter-spacing:.04em}
 
-/* Estado badge */
 .estado-badge{display:inline-block;padding:3px 10px;border-radius:4px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
 .e-pendiente{background:#FFF4D6;color:#8B6914}
 .e-aprobada,.e-aprobado,.e-pagada{background:#EAF3DE;color:#3B6D11}
 .e-rechazada,.e-rechazado{background:#FCEBEB;color:#A32D2D}
 .e-parcial{background:#E8F0F8;color:#2A5A8C}
 
-/* Botones aprobar/rechazar en concepto */
 .btn-aprobar{background:#3B6D11;color:#fff;border:none;border-radius:4px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Courier New',monospace}
 .btn-aprobar:hover{background:#2D550C}
 .btn-rechazar{background:#A32D2D;color:#fff;border:none;border-radius:4px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:'Courier New',monospace;margin-left:6px}
 .btn-rechazar:hover{background:#7E2222}
 .btn-aprobar:disabled,.btn-rechazar:disabled{opacity:.4;cursor:not-allowed}
 
-/* Modales */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:1000;align-items:center;justify-content:center;padding:1rem}
 .modal-overlay.show{display:flex}
 .modal-box{background:#fff;border-radius:10px;max-width:420px;width:100%;overflow:hidden}
@@ -112,7 +107,6 @@ textarea{resize:vertical;min-height:60px}
 .list-item .name{font-weight:bold;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .list-item .date{color:#888;font-size:0.85rem;flex-shrink:0}
 
-/* Detalle de requisicion (en modal) */
 .detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
 .detail-grid .cell{background:#f5f3ee;border-radius:4px;padding:8px 10px}
 .detail-grid .cell .label{font-size:9px;color:#888780;letter-spacing:.06em;text-transform:uppercase}
@@ -127,6 +121,15 @@ textarea{resize:vertical;min-height:60px}
 .concepto-row .info-grid .row .lbl{color:#888780;text-transform:uppercase;font-size:10px;min-width:60px}
 .concepto-row .actions{margin-top:10px}
 .concepto-row .motivo{margin-top:8px;font-size:11px;color:#A32D2D;font-style:italic;background:#fff;padding:6px 8px;border-radius:4px}
+
+/* v3.1: desglose por (banco, cuenta) en modal de pago */
+.grupo-row{background:#1a1a18;color:#fff;border-radius:6px;padding:10px 14px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.grupo-row .grupo-info{flex:1;min-width:180px}
+.grupo-row .grupo-banco{font-weight:700;font-size:13px;letter-spacing:.04em}
+.grupo-row .grupo-cuenta{font-family:monospace;font-size:11px;color:#a8a8a0;margin-top:2px}
+.grupo-row .grupo-recep{font-size:11px;color:#d3d1c7;margin-top:2px}
+.grupo-row .grupo-monto{font-weight:700;font-size:14px}
+.spei-info{background:#FFF4D6;color:#8B6914;padding:8px 12px;border-radius:6px;font-size:11px;margin-bottom:10px;border-left:3px solid #ED7D31}
 
 @media(max-width:580px){.form-body{padding:1rem}.grid2,.grid3{grid-template-columns:1fr}.btn-row{flex-direction:column}.masthead{padding:12px 1rem}.user-bar{padding:8px 1rem}.tabs{padding:0}.tab{padding:10px 12px;font-size:11px}.detail-grid{grid-template-columns:1fr 1fr}}
 </style>
@@ -148,7 +151,6 @@ textarea{resize:vertical;min-height:60px}
     <a href="#" onclick="cerrarSesion();return false;">Cerrar sesion</a>
   </div>
 
-  <!-- Tabs -->
   <div class="tabs" id="tabs">
     <div class="tab active" data-tab="crear" onclick="changeTab('crear')">Crear</div>
     <div class="tab" data-tab="aprobar" onclick="changeTab('aprobar')" style="display:none">
@@ -340,6 +342,27 @@ textarea{resize:vertical;min-height:60px}
   </div>
 </div>
 
+<!-- v3.1: Modal de exito post-creacion con opciones de compartir/descargar -->
+<div id="exito-modal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-header"><strong>REQUISICION CREADA</strong></div>
+    <div class="modal-body">
+      <div style="text-align:center;margin-bottom:14px">
+        <div style="font-size:36px;color:#3B6D11">✓</div>
+        <div style="font-size:14px;font-weight:700;color:#1a1a18;margin-top:6px" id="exito-folio">FOLIO</div>
+        <div style="font-size:11px;color:#4A4A48;margin-top:4px" id="exito-monto">Monto</div>
+      </div>
+      <p style="font-size:12px;color:#4A4A48;text-align:center">El PDF se guardo en Drive. Eligelo que quieres hacer con tu copia local:</p>
+      <div class="modal-actions" style="flex-direction:column;gap:8px">
+        <button class="btn-success" id="btn-compartir-pdf" onclick="compartirPDF()">📲 Compartir / Enviar por WhatsApp</button>
+        <button class="btn-primary" onclick="descargarPDF()">⬇ Descargar al dispositivo</button>
+        <button class="btn-secondary" onclick="cerrarExitoModal()">Cerrar</button>
+      </div>
+      <div id="exito-drive-link" style="text-align:center;margin-top:10px;font-size:11px"></div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <script>
 // PDF.js worker
@@ -356,19 +379,6 @@ const APP_KEY_APROBAR = 'requisicion-aprobar';
 const APP_KEY_PAGAR = 'requisicion-pagar';
 const META_PREFIX = 'CAMI_REQUISICION_DATA::';
 
-// Validacion de cuenta por banco
-const BANCO_VALIDACION = {
-  'BBVA':       { min: 10, max: 16, label: '10 o 16 digitos' },
-  'BANAMEX':    { min: 16, max: 18, label: '16 o 18 digitos' },
-  'SANTANDER':  { min: 16, max: 18, label: '16 o 18 digitos' },
-  'BANORTE':    { min: 16, max: 18, label: '16 o 18 digitos' },
-  'HSBC':       { min: 16, max: 18, label: '16 o 18 digitos' },
-  'SCOTIABANK': { min: 16, max: 18, label: '16 o 18 digitos' },
-  'INBURSA':    { min: 16, max: 18, label: '16 o 18 digitos' },
-  'AZTECA':     { min: 16, max: 18, label: '16 o 18 digitos' },
-  'OTRO':       { min: 10, max: 18, label: '10-18 digitos' }
-};
-
 // Cache local
 let _logoB64 = null;
 let _userInfo = null;
@@ -378,6 +388,12 @@ let _pagarCache = [];
 let _conceptoEnRechazo = null;
 let _reqEnPago = null;
 let _currentTab = 'crear';
+
+// v3.1: bancos dinamicos desde DB
+let _bancosCache = [];   // [{nombre, longitudes:[10,16,18]}, ...]
+
+// v3.1: cache del PDF generado para compartir/descargar
+let _ultimoPDF = null;   // { folio, blob, doc }
 
 document.getElementById('fecha').value = new Date().toISOString().split('T')[0];
 
@@ -467,7 +483,6 @@ async function init() {
     return;
   }
 
-  // Verificar acceso minimo (cualquiera de las 3 app keys da acceso)
   const apps = session.apps || [];
   const tieneAlguna = apps.indexOf(APP_KEY) !== -1 ||
                       apps.indexOf(APP_KEY_APROBAR) !== -1 ||
@@ -481,21 +496,18 @@ async function init() {
   _userInfo = session;
   document.getElementById('user-name').textContent = session.nombre + ' (' + (session.rol || 'Usuario') + ')';
 
-  // Mostrar pestañas segun permisos
   configurarTabs();
 
-  // Decidir pestaña inicial
   if (tieneApp(APP_KEY)) {
     document.getElementById('solicitante').value = session.nombre;
-    await Promise.all([cargarProyectos(), cargarCategorias(), cargarLogo()]);
+    // v3.1: cargar bancos junto con proyectos y categorias
+    await Promise.all([cargarProyectos(), cargarCategorias(), cargarBancos(), cargarLogo()]);
     addConcepto();
   } else {
-    // No puede crear, no inicializa el formulario, va a la primera pestaña disponible
     if (tieneApp(APP_KEY_APROBAR)) changeTab('aprobar');
     else if (tieneApp(APP_KEY_PAGAR)) changeTab('pagar');
   }
 
-  // Pre-cargar conteos en background si tiene esos permisos
   if (tieneApp(APP_KEY_APROBAR)) cargarPorAprobar();
   if (tieneApp(APP_KEY_PAGAR))   cargarPorPagar();
 }
@@ -523,7 +535,6 @@ function changeTab(tabName) {
   document.querySelector('.tab[data-tab="' + tabName + '"]').classList.add('active');
   document.getElementById('content-' + tabName).classList.add('active');
 
-  // Refrescar listas al entrar
   if (tabName === 'aprobar') cargarPorAprobar();
   if (tabName === 'pagar')   cargarPorPagar();
 }
@@ -560,6 +571,23 @@ async function cargarCategorias() {
   }
 }
 
+// v3.1: nuevo
+async function cargarBancos() {
+  try {
+    const r = await fetch(SCRIPT_URL + '?accion=listaBancos');
+    const d = await r.json();
+    if (d.ok && Array.isArray(d.bancos)) {
+      _bancosCache = d.bancos;
+    } else {
+      _bancosCache = [];
+      console.warn('No se cargaron bancos:', d.error || 'desconocido');
+    }
+  } catch (e) {
+    _bancosCache = [];
+    console.warn('Error cargando bancos:', e.message);
+  }
+}
+
 async function cargarLogo() {
   try {
     const r = await fetch(SCRIPT_URL + '?accion=getLogo');
@@ -584,8 +612,15 @@ function addConcepto(item) {
   const empresa  = item ? (item.empresa || '') : '';
   const monto    = item ? (item.monto || '') : '';
 
-  const bancosOpts = ['BBVA','BANAMEX','SANTANDER','BANORTE','HSBC','SCOTIABANK','INBURSA','AZTECA','OTRO']
-    .map(b => `<option value="${b}" ${b===banco?'selected':''}>${b}</option>`).join('');
+  // v3.1: opciones de banco desde _bancosCache
+  let bancosOpts = '';
+  if (_bancosCache.length === 0) {
+    bancosOpts = '<option value="">Sin bancos cargados</option>';
+  } else {
+    bancosOpts = _bancosCache.map(b =>
+      `<option value="${escapeAttr(b.nombre)}" ${b.nombre===banco?'selected':''}>${escapeHtml(b.nombre)}</option>`
+    ).join('');
+  }
 
   tr.innerHTML =
     '<td><input type="text" placeholder="Descripcion" value="'+escapeAttr(concepto)+'"/></td>' +
@@ -609,6 +644,7 @@ function delRow(btn) {
   }
 }
 
+// v3.1: ahora valida contra _bancosCache
 function validarCuentaFila(el) {
   const tr = el.closest('tr');
   const banco = tr.querySelector('select').value;
@@ -620,12 +656,22 @@ function validarCuentaFila(el) {
     cuentaInput.title = '';
     return;
   }
-  const v = BANCO_VALIDACION[banco] || BANCO_VALIDACION['OTRO'];
-  const ok = (cuenta.length === v.min || cuenta.length === v.max ||
-              (cuenta.length >= v.min && cuenta.length <= v.max && banco === 'OTRO'));
-  if (!ok) {
+  const def = _bancosCache.find(b => b.nombre === banco);
+  if (!def || !def.longitudes || !def.longitudes.length) {
+    // Sin definicion de longitudes: aceptar cualquier longitud >= 10
+    if (cuenta.length >= 10) {
+      cuentaInput.classList.remove('invalid');
+      cuentaInput.title = '';
+    } else {
+      cuentaInput.classList.add('invalid');
+      cuentaInput.title = 'Cuenta muy corta';
+    }
+    return;
+  }
+  const valido = def.longitudes.indexOf(cuenta.length) !== -1;
+  if (!valido) {
     cuentaInput.classList.add('invalid');
-    cuentaInput.title = banco + ' requiere ' + v.label;
+    cuentaInput.title = banco + ' requiere ' + def.longitudes.join(' o ') + ' digitos';
   } else {
     cuentaInput.classList.remove('invalid');
     cuentaInput.title = '';
@@ -987,20 +1033,16 @@ async function aprobarConcepto(idConcepto) {
       return;
     }
     showToast('Concepto aprobado.', 'ok');
-    // Si ya no quedan pendientes, cerrar modal y refrescar
     if (data.conceptos_pendientes === 0) {
       cerrarAprobarModal();
     } else {
-      // Actualizar el cache local del concepto
       actualizarConceptoEnCache(idConcepto, 'Aprobado', '');
-      // Re-render del modal con los nuevos estados
       const folio = data.requisicion_estado ? findFolioByConcepto(idConcepto) : null;
       if (folio) {
         const req = _aprobarCache.find(r => r.folio === folio);
         if (req) renderAprobarModalBody(req);
       }
     }
-    // Refrescar la lista de fondo
     cargarPorAprobar();
   } catch (err) {
     showToast('Error: ' + escapeHtml(err.message), 'err');
@@ -1144,12 +1186,42 @@ function renderListaPagar() {
   }).join('');
 }
 
+// v3.1: agrupar conceptos aprobados por (banco, cuenta) para preview
+function agruparPorBancoCuenta(conceptos) {
+  const aprobados = conceptos.filter(c => String(c.estado).toLowerCase() === 'aprobado');
+  const map = {};
+  const orden = [];
+  aprobados.forEach(c => {
+    const key = String(c.banco).toUpperCase() + '||' + c.cuenta;
+    if (!map[key]) {
+      map[key] = { banco: c.banco, cuenta: c.cuenta, monto: 0, receptores: {}, conceptos: [] };
+      orden.push(key);
+    }
+    map[key].monto += c.monto;
+    map[key].receptores[c.receptor] = true;
+    map[key].conceptos.push(c);
+  });
+  return orden.map(k => {
+    const g = map[k];
+    const recs = Object.keys(g.receptores);
+    return {
+      banco: g.banco,
+      cuenta: g.cuenta,
+      monto: g.monto,
+      receptores: recs,
+      beneficiario: recs.length === 1 ? recs[0] : 'Multiples (' + recs.length + ')',
+      conceptos: g.conceptos
+    };
+  });
+}
+
 function abrirPagarModal(idx) {
   const req = _pagarCache[idx];
   if (!req) return;
   _reqEnPago = req;
   document.getElementById('pagar-modal-folio').textContent = req.folio;
-  const aprobados = req.conceptos.filter(c => String(c.estado).toLowerCase() === 'aprobado');
+
+  const grupos = agruparPorBancoCuenta(req.conceptos);
   const rechazados = req.conceptos.filter(c => String(c.estado).toLowerCase() === 'rechazado');
 
   const body = document.getElementById('pagar-modal-body');
@@ -1162,8 +1234,22 @@ function abrirPagarModal(idx) {
     ${req.observaciones ? `<div style="background:#f5f3ee;border-left:3px solid #d3d1c7;padding:8px 12px;margin-bottom:14px;font-size:11px;color:#4A4A48"><b>Observaciones:</b> ${escapeHtml(req.observaciones)}</div>` : ''}
     ${req.pdf_url ? `<div style="margin-bottom:14px"><a href="${req.pdf_url}" target="_blank" style="font-size:11px;color:#2A5A8C">Ver PDF original →</a></div>` : ''}
 
-    <div class="section-title" style="margin-bottom:10px">Conceptos a pagar (aprobados)</div>
-    ${aprobados.map(c => renderConceptoPagar(c, true)).join('')}
+    <div class="spei-info">
+      ⓘ Esta requisicion generara <b>${grupos.length} transferencia${grupos.length!==1?'s':''}</b> bancaria${grupos.length!==1?'s':''} (una por cada banco+cuenta destino):
+    </div>
+    ${grupos.map((g, i) => `
+      <div class="grupo-row">
+        <div class="grupo-info">
+          <div class="grupo-banco">SPEI ${i+1}: ${escapeHtml(g.banco)}</div>
+          <div class="grupo-cuenta">${escapeHtml(g.cuenta)}</div>
+          <div class="grupo-recep">→ ${escapeHtml(g.beneficiario)} · ${g.conceptos.length} concepto${g.conceptos.length!==1?'s':''}</div>
+        </div>
+        <div class="grupo-monto">${fmt(g.monto)}</div>
+      </div>
+    `).join('')}
+
+    <div class="section-title" style="margin-top:16px;margin-bottom:10px">Detalle de conceptos aprobados</div>
+    ${grupos.flatMap(g => g.conceptos).map(c => renderConceptoPagar(c, true)).join('')}
 
     ${rechazados.length ? `
       <div class="section-title" style="margin-top:14px;margin-bottom:10px">Conceptos rechazados (no se pagan)</div>
@@ -1208,8 +1294,9 @@ function cerrarPagarModal() {
 
 function abrirConfirmarPago() {
   if (!_reqEnPago) return;
+  const grupos = agruparPorBancoCuenta(_reqEnPago.conceptos);
   document.getElementById('confirmar-pago-resumen').innerHTML =
-    'Vas a marcar la requisicion <b>' + escapeHtml(_reqEnPago.folio) + '</b> como pagada por <b>' + fmt(_reqEnPago.monto_aprobado) + '</b>. Esto generara una transaccion en TRANSACCIONES.';
+    'Vas a marcar <b>' + escapeHtml(_reqEnPago.folio) + '</b> como pagada por <b>' + fmt(_reqEnPago.monto_aprobado) + '</b>. Se generaran <b>' + grupos.length + ' transaccion' + (grupos.length!==1?'es':'') + '</b> en TRANSACCIONES.';
   document.getElementById('confirmar-pago-fecha').value = new Date().toISOString().split('T')[0];
   document.getElementById('confirmar-pago-error').textContent = '';
   document.getElementById('confirmar-pago-modal').classList.add('show');
@@ -1248,7 +1335,9 @@ async function confirmarPagoFinal() {
     }
     cerrarConfirmarPago();
     cerrarPagarModal();
-    showToast('Pagada. ID Banco asignado: <b>' + data.id_banco + '</b>. Monto: ' + fmt(data.monto_pagado), 'ok');
+    // v3.1: data.ids_banco es array, data.transacciones es count
+    const ids = (data.ids_banco || []).join(', ');
+    showToast('Pagada. ' + (data.transacciones || 1) + ' transaccion' + ((data.transacciones||1)!==1?'es':'') + ' generada' + ((data.transacciones||1)!==1?'s':'') + ': <b>' + ids + '</b>. Monto: ' + fmt(data.monto_pagado), 'ok');
     cargarPorPagar();
     btn.disabled = false; btn.textContent = 'Confirmar';
   } catch (e) {
@@ -1288,7 +1377,8 @@ async function enviarRequisicion() {
     const folioPreview = simplificarProyecto(d.proyecto) + '-XXX-' + d.fecha;
 
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
+    // v3.1: PDF en formato horizontal (landscape)
+    const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'letter' });
     const metadataJSON = JSON.stringify(d);
     doc.setProperties({
       title: 'Requisicion - ' + d.proyecto,
@@ -1313,7 +1403,8 @@ async function enviarRequisicion() {
     const result = await resp.json();
 
     if (result.ok) {
-      const doc2 = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
+      // Generar PDF final con folio real
+      const doc2 = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'letter' });
       doc2.setProperties({
         title: 'Requisicion - ' + result.folio,
         subject: META_PREFIX + metadataJSON,
@@ -1321,11 +1412,18 @@ async function enviarRequisicion() {
         creator: 'CAMI Sistema'
       });
       construirPDF(doc2, d, total, result.folio);
-      doc2.save(result.folio + '.pdf');
 
-      let msg = 'Requisicion guardada con folio <b>' + result.folio + '</b>';
-      if (result.url) msg += '<br><a href="' + result.url + '" target="_blank">Ver en Drive</a>';
-      showToast(msg, 'ok');
+      // v3.1: guardar el PDF en cache para el modal de exito
+      const pdfBlob = doc2.output('blob');
+      _ultimoPDF = {
+        folio: result.folio,
+        blob: pdfBlob,
+        doc: doc2,
+        url: result.url,
+        monto: total
+      };
+
+      mostrarExitoModal(result.folio, total, result.url);
     } else if (/sesion/i.test(result.error || '')) {
       abrirReloginModal();
     } else {
@@ -1339,78 +1437,151 @@ async function enviarRequisicion() {
   }
 }
 
+// v3.1: modal de exito con opciones compartir/descargar
+function mostrarExitoModal(folio, monto, driveUrl) {
+  document.getElementById('exito-folio').textContent = folio;
+  document.getElementById('exito-monto').textContent = 'Monto: ' + fmt(monto);
+  const linkDiv = document.getElementById('exito-drive-link');
+  if (driveUrl) {
+    linkDiv.innerHTML = '<a href="' + driveUrl + '" target="_blank" style="color:#2A5A8C">Ver tambien en Drive →</a>';
+  } else {
+    linkDiv.innerHTML = '';
+  }
+  // Si Web Share API no soporta archivos, ocultar boton compartir
+  const btnCompartir = document.getElementById('btn-compartir-pdf');
+  if (!puedeCompartirArchivo()) {
+    btnCompartir.style.display = 'none';
+  } else {
+    btnCompartir.style.display = '';
+  }
+  document.getElementById('exito-modal').classList.add('show');
+}
+
+function cerrarExitoModal() {
+  document.getElementById('exito-modal').classList.remove('show');
+}
+
+function puedeCompartirArchivo() {
+  // Web Share API con files solo en mobile + HTTPS
+  if (!navigator.canShare || !navigator.share) return false;
+  try {
+    const testFile = new File([new Blob(['test'])], 'test.pdf', { type: 'application/pdf' });
+    return navigator.canShare({ files: [testFile] });
+  } catch (e) {
+    return false;
+  }
+}
+
+async function compartirPDF() {
+  if (!_ultimoPDF) { showToast('No hay PDF para compartir.', 'err'); return; }
+  try {
+    const file = new File([_ultimoPDF.blob], _ultimoPDF.folio + '.pdf', { type: 'application/pdf' });
+    if (!navigator.canShare || !navigator.canShare({ files: [file] })) {
+      // Fallback: descargar
+      descargarPDF();
+      return;
+    }
+    await navigator.share({
+      files: [file],
+      title: 'Requisicion ' + _ultimoPDF.folio,
+      text: 'Requisicion de pago CAMI - ' + _ultimoPDF.folio
+    });
+    cerrarExitoModal();
+    // Limpiar formulario para nueva requisicion
+    limpiarFormulario();
+  } catch (e) {
+    if (e.name === 'AbortError') return; // usuario cancelo
+    showToast('Error compartiendo: ' + escapeHtml(e.message) + '. Descargando en su lugar...', 'info');
+    descargarPDF();
+  }
+}
+
+function descargarPDF() {
+  if (!_ultimoPDF) { showToast('No hay PDF para descargar.', 'err'); return; }
+  _ultimoPDF.doc.save(_ultimoPDF.folio + '.pdf');
+  cerrarExitoModal();
+  limpiarFormulario();
+}
+
+function limpiarFormulario() {
+  // Mantener solicitante, fecha, proyecto, categoria. Limpiar conceptos y observaciones.
+  document.getElementById('obs').value = '';
+  document.getElementById('partidas-body').innerHTML = '';
+  addConcepto();
+  showToast('Listo para una nueva requisicion.', 'ok');
+}
+
 function simplificarProyecto(p) {
   return String(p || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/[^A-Za-z0-9]/g, '_').toUpperCase();
 }
 
-// ── PDF (sin cambios respecto a v anterior) ───────────────────
+// ── PDF (v3.1: landscape + recuadro de firma) ─────────────────
 
 function construirPDF(doc, d, total, folio) {
-  const W = 215.9, H = 279.4;
+  // Letter horizontal: 279.4mm x 215.9mm
+  const W = 279.4, H = 215.9;
   const pL = 14, pR = 14;
-  const cW = W - pL - pR;
+  const cW = W - pL - pR;  // 251.4mm utiles
   let y = 12;
 
-  const headerH = 28;
-  doc.setFillColor(26, 26, 24); doc.rect(0, 0, W, headerH + 6, 'F');
+  // Header negro
+  const headerH = 26;
+  doc.setFillColor(26, 26, 24); doc.rect(0, 0, W, headerH + 4, 'F');
   if (_logoB64) {
-    try { doc.addImage(_logoB64, 'PNG', pL, 5, 22, 22, '', 'FAST'); } catch (e) {}
+    try { doc.addImage(_logoB64, 'PNG', pL, 4, 22, 22, '', 'FAST'); } catch (e) {}
   }
-  doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(18);
-  doc.text('CAMI', pL + 28, 14);
+  doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(20);
+  doc.text('CAMI', pL + 28, 13);
   doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(180, 180, 180);
-  doc.text('COMERCIALIZADORA DE ACEROS MANUFACTURADOS PARA LA INDUSTRIA', pL + 28, 19);
+  doc.text('COMERCIALIZADORA DE ACEROS MANUFACTURADOS PARA LA INDUSTRIA', pL + 28, 18);
   doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'normal'); doc.setFontSize(8);
-  doc.text('CONTROL FINANCIERO', W - pR, 11, { align: 'right' });
+  doc.text('CONTROL FINANCIERO', W - pR, 10, { align: 'right' });
   doc.setFont('helvetica', 'bold'); doc.setFontSize(13);
-  doc.text('Requisicion de Pago', W - pR, 17, { align: 'right' });
-  doc.setTextColor(237, 125, 49); doc.setFont('helvetica', 'bold'); doc.setFontSize(9);
-  doc.text(folio, W - pR, 23, { align: 'right' });
+  doc.text('Requisicion de Pago', W - pR, 16, { align: 'right' });
+  doc.setTextColor(237, 125, 49); doc.setFont('helvetica', 'bold'); doc.setFontSize(10);
+  doc.text(folio, W - pR, 22, { align: 'right' });
 
-  y = headerH + 14;
+  y = headerH + 12;
 
+  // Estado
   doc.setFillColor(255, 244, 214); doc.setDrawColor(255, 244, 214);
   doc.roundedRect(pL, y - 4, 60, 7, 1, 1, 'F');
   doc.setTextColor(139, 105, 20); doc.setFont('helvetica', 'bold'); doc.setFontSize(8);
   doc.text('PENDIENTE DE APROBACION', pL + 30, y + 1, { align: 'center' });
   y += 8;
 
+  // Datos del solicitante en 5 columnas (mas espacio en landscape)
   doc.setTextColor(74, 74, 72); doc.setFont('helvetica', 'bold'); doc.setFontSize(8);
   doc.text('DATOS DEL SOLICITANTE', pL, y);
   doc.setDrawColor(211, 209, 199); doc.setLineWidth(0.2);
   doc.line(pL, y + 1, pL + cW, y + 1);
   y += 5;
   drawInfoRow(doc, pL, y, [
-    { label: 'Solicitante', value: d.solicitante, w: cW * 0.5 },
-    { label: 'WhatsApp',    value: d.whatsapp,    w: cW * 0.25 },
-    { label: 'Fecha',       value: formatDateMx(d.fecha), w: cW * 0.25 }
+    { label: 'Solicitante', value: d.solicitante,           w: cW * 0.30 },
+    { label: 'WhatsApp',    value: d.whatsapp,              w: cW * 0.18 },
+    { label: 'Fecha',       value: formatDateMx(d.fecha),   w: cW * 0.16 },
+    { label: 'Proyecto',    value: d.proyecto,              w: cW * 0.20 },
+    { label: 'Categoria',   value: d.categoria,             w: cW * 0.16 }
   ]);
   y += 12;
 
-  doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(74, 74, 72);
-  doc.text('PROYECTO Y CATEGORIA', pL, y);
-  doc.line(pL, y + 1, pL + cW, y + 1);
-  y += 5;
-  drawInfoRow(doc, pL, y, [
-    { label: 'Proyecto',  value: d.proyecto,  w: cW * 0.5 },
-    { label: 'Categoria', value: d.categoria, w: cW * 0.5 }
-  ]);
-  y += 12;
-
+  // Tabla de conceptos
   doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(74, 74, 72);
   doc.text('CONCEPTOS A PAGAR', pL, y);
   doc.line(pL, y + 1, pL + cW, y + 1);
   y += 4;
 
+  // v3.1: columnas optimizadas para landscape (251.4mm utiles)
+  // # | Concepto | Banco | Cuenta | Receptor | Empresa | Monto
   const cols = [
-    { x: pL,            w: 8,  h: '#',        align: 'center' },
-    { x: pL + 8,        w: 38, h: 'Concepto', align: 'left'   },
-    { x: pL + 46,       w: 22, h: 'Banco',    align: 'left'   },
-    { x: pL + 68,       w: 36, h: 'Cuenta',   align: 'left'   },
-    { x: pL + 104,      w: 36, h: 'Receptor', align: 'left'   },
-    { x: pL + 140,      w: 28, h: 'Empresa',  align: 'left'   },
-    { x: pL + 168,      w: cW - 168 + pL, h: 'Monto', align: 'right' }
+    { x: pL,            w: 8,   h: '#',        align: 'center' },
+    { x: pL + 8,        w: 60,  h: 'Concepto', align: 'left'   },
+    { x: pL + 68,       w: 26,  h: 'Banco',    align: 'left'   },
+    { x: pL + 94,       w: 42,  h: 'Cuenta',   align: 'left'   },
+    { x: pL + 136,      w: 50,  h: 'Receptor', align: 'left'   },
+    { x: pL + 186,      w: 40,  h: 'Empresa',  align: 'left'   },
+    { x: pL + 226,      w: cW - 226 + pL, h: 'Monto', align: 'right' }
   ];
 
   doc.setFillColor(26, 26, 24); doc.rect(pL, y, cW, 6, 'F');
@@ -1421,16 +1592,22 @@ function construirPDF(doc, d, total, folio) {
   });
   y += 6;
 
-  doc.setTextColor(0, 0, 0); doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5);
+  doc.setTextColor(0, 0, 0); doc.setFont('helvetica', 'normal'); doc.setFontSize(8);
   d.conceptos.forEach((c, i) => {
+    // Cada celda envuelve si su contenido es muy largo
     const conceptoLines = doc.splitTextToSize(c.concepto, cols[1].w - 2);
     const receptorLines = doc.splitTextToSize(c.receptor, cols[4].w - 2);
-    const empresaLines  = doc.splitTextToSize(c.empresa, cols[5].w - 2);
-    const rh = Math.max(6, conceptoLines.length * 3.5, receptorLines.length * 3.5, empresaLines.length * 3.5) + 2;
-    if (y + rh > H - 50) { doc.addPage(); y = 14; }
+    const empresaLines  = doc.splitTextToSize(c.empresa,  cols[5].w - 2);
+    const rh = Math.max(6,
+      conceptoLines.length * 3.5,
+      receptorLines.length * 3.5,
+      empresaLines.length * 3.5
+    ) + 2;
+    if (y + rh > H - 65) { doc.addPage(); y = 14; }
     if (i % 2 === 1) { doc.setFillColor(248, 247, 244); doc.rect(pL, y, cW, rh, 'F'); }
     doc.setDrawColor(230, 228, 220); doc.setLineWidth(0.1);
     doc.line(pL, y + rh, pL + cW, y + rh);
+
     doc.text(String(i + 1), cols[0].x + cols[0].w / 2, y + 4, { align: 'center' });
     conceptoLines.forEach((l, j) => doc.text(l, cols[1].x + 1, y + 4 + j * 3.5));
     doc.text(c.banco, cols[2].x + 1, y + 4);
@@ -1449,13 +1626,13 @@ function construirPDF(doc, d, total, folio) {
   doc.setDrawColor(26, 26, 24); doc.setLineWidth(0.4);
   doc.line(pL, y, pL + cW, y);
   y += 4;
-  doc.setFont('helvetica', 'bold'); doc.setFontSize(10);
-  doc.text('TOTAL SOLICITADO:', pL + cW - 60, y);
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(11);
+  doc.text('TOTAL SOLICITADO:', pL + cW - 70, y);
   doc.text('$' + total.toLocaleString('es-MX', { minimumFractionDigits: 2 }) + ' MXN', pL + cW - 1, y, { align: 'right' });
   y += 8;
 
   if (d.observaciones) {
-    if (y > H - 60) { doc.addPage(); y = 14; }
+    if (y > H - 65) { doc.addPage(); y = 14; }
     doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.setTextColor(74, 74, 72);
     doc.text('OBSERVACIONES', pL, y);
     doc.setDrawColor(211, 209, 199); doc.setLineWidth(0.2);
@@ -1470,25 +1647,36 @@ function construirPDF(doc, d, total, folio) {
     y += obsH + 6;
   }
 
-  if (y > H - 50) { doc.addPage(); y = 14; }
-  y = Math.max(y, H - 48);
-  const firmaW = 70;
-  doc.setDrawColor(26, 26, 24); doc.setLineWidth(0.3);
-  doc.line(pL, y + 22, pL + firmaW, y + 22);
-  doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.setTextColor(74, 74, 72);
-  doc.text('Firma del Solicitante', pL + firmaW / 2, y + 26, { align: 'center' });
-  doc.setFont('helvetica', 'bold'); doc.setTextColor(0, 0, 0);
-  doc.text(d.solicitante, pL + firmaW / 2, y + 30, { align: 'center' });
+  // ── v3.1: RECUADRO DE FIRMA + QR ────────────────────────────
+  // Si no hay espacio para la zona de firma (necesita ~50mm), nueva pagina
+  if (y > H - 55) { doc.addPage(); y = 14; }
+  // Anclar el bloque de firma+QR cerca del fondo de la pagina
+  const firmaY = Math.max(y, H - 50);
 
+  // Recuadro de firma a la izquierda
+  const firmaW = 90;
+  const firmaH = 30;
+  doc.setDrawColor(74, 74, 72); doc.setLineWidth(0.4);
+  doc.rect(pL, firmaY, firmaW, firmaH);
+  // Etiqueta arriba del recuadro
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(7); doc.setTextColor(136, 135, 128);
+  doc.text('FIRMA DEL SOLICITANTE', pL + 2, firmaY - 2);
+  // Nombre debajo del recuadro
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(9); doc.setTextColor(0, 0, 0);
+  doc.text(d.solicitante, pL + firmaW / 2, firmaY + firmaH + 5, { align: 'center' });
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(136, 135, 128);
+  doc.text('Nombre y firma', pL + firmaW / 2, firmaY + firmaH + 9, { align: 'center' });
+
+  // QR a la derecha
   const verifUrl = SCRIPT_URL + '?accion=verificar&folio=' + encodeURIComponent(folio);
   try {
     const qrCanvas = generarQR(verifUrl);
     if (qrCanvas) {
-      const qrSize = 28;
+      const qrSize = 30;
       const qrX = pL + cW - qrSize;
-      doc.addImage(qrCanvas.toDataURL('image/png'), 'PNG', qrX, y, qrSize, qrSize);
+      doc.addImage(qrCanvas.toDataURL('image/png'), 'PNG', qrX, firmaY, qrSize, qrSize);
       doc.setFont('helvetica', 'normal'); doc.setFontSize(7); doc.setTextColor(120, 120, 120);
-      doc.text('Escanea para verificar', qrX + qrSize / 2, y + qrSize + 3, { align: 'center' });
+      doc.text('Escanea para verificar', qrX + qrSize / 2, firmaY + qrSize + 4, { align: 'center' });
     }
   } catch (e) { console.warn('QR no generado:', e.message); }
 }
